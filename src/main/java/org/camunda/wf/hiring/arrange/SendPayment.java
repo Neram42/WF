@@ -1,5 +1,6 @@
 package org.camunda.wf.hiring.arrange;
 
-public class ArrangeInterviewDate {
+
+public class SendPayment {
 
 }
