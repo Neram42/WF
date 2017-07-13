@@ -90,14 +90,14 @@
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="SequenceFlow_1ba7qg5" sourceRef="ExclusiveGateway_1m8z1f4" targetRef="define_job_information" />
     <bpmn:sequenceFlow id="SequenceFlow_1ar7lxu" sourceRef="define_job_information" targetRef="provde_job_information" />
-    <bpmn:userTask id="define_job_information" name="Define job information">
+    <bpmn:userTask id="define_job_information" name="Define job information" camunda:formKey="embedded:app:forms/Job_information.html">
       <bpmn:incoming>SequenceFlow_1ba7qg5</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1ar7lxu</bpmn:outgoing>
       <bpmn:dataOutputAssociation id="DataOutputAssociation_0dwp61n">
         <bpmn:targetRef>job_information_database</bpmn:targetRef>
       </bpmn:dataOutputAssociation>
     </bpmn:userTask>
-    <bpmn:sendTask id="provde_job_information" name="Provide job information" camunda:class="org.camunda.bpm.MySendTaskDelegate">
+    <bpmn:sendTask id="provde_job_information" name="Provide job information" camunda:class="org.camunda.bpm.ProvideJobInformation">
       <bpmn:incoming>SequenceFlow_1ar7lxu</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1epk7qw</bpmn:outgoing>
       <bpmn:property id="Property_1pqt9l0" name="__targetRef_placeholder" />

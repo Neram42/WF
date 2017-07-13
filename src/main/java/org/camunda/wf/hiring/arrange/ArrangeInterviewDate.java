@@ -23,11 +23,11 @@ public class ArrangeInterviewDate {
 
 	// Variable to show the time in the right format if needed
 	public static SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMM dd HH");
+	
+	public static String subject;
+	public static String body;
 
 	public static void main(String[] args) {
-
-		// ExchangeService service = getOutlookAccess("hr_employee@outlook.de",
-		// "HRemployee");
 
 		// Initialize the startdate of the interview
 		Calendar startdate = new GregorianCalendar();
@@ -41,9 +41,12 @@ public class ArrangeInterviewDate {
 		enddate.add(Calendar.DAY_OF_MONTH, 5);
 		enddate.set(Calendar.HOUR_OF_DAY, 9);
 		enddate.set(Calendar.MINUTE, 0);
-
-		// System.out.println("Startdate : " + sdf.format(startdate.getTime()));
-		// System.out.println("Enddate : " + sdf.format(enddate.getTime()));
+		
+		//Set subject and body of interview
+		//TODO: Name des Applicants bzw Applicant ID
+		//TODO: PDF der Bewerbung?? bzw. Bewerbungsdokument
+		subject = "Interview with Applicant";
+		body = "Hello \n this meeting is a job interview for the applicant...";
 
 		checkDate(startdate, enddate);
 
@@ -135,11 +138,8 @@ public class ArrangeInterviewDate {
 					// If the calendars are empty at the given time an
 					// appointment
 					// in the calendars is done
-					writeCalendar(startdate, enddate, "Interview", "Body", service1, participant1, participant2);
-					// writeCalendar(startdate, enddate, "Interview", "Body",
-					// service2);
-					// writeCalendar(startdate, enddate, "Interview", "Body",
-					// service3);
+					// TODO: specify Body and subject!!
+					writeCalendar(startdate, enddate, subject, body, service1, participant1, participant2);
 
 					// TODO: INFORMATIONSWEITERGABE AN CAMUNDA
 
@@ -155,17 +155,15 @@ public class ArrangeInterviewDate {
 						checkDate(newStartDate, newEndDate);
 					} else {
 						// If no date is available look at the next day
-//						if (enddate.get(Calendar.HOUR_OF_DAY) == 16) {
-							System.out.println("next day...");
-							Calendar newStartDate = startdate;
-							newStartDate.add(Calendar.DAY_OF_MONTH, 1);
-							newStartDate.set(Calendar.HOUR_OF_DAY, 8);
-							// newStartDate.set(Calendar.MINUTE, 0);
-							Calendar newEndDate = enddate;
-							newEndDate.add(Calendar.DAY_OF_MONTH, 1);
-							newEndDate.set(Calendar.HOUR_OF_DAY, 9);
-							checkDate(newStartDate, newEndDate);
-//						}
+						System.out.println("next day...");
+						Calendar newStartDate = startdate;
+						newStartDate.add(Calendar.DAY_OF_MONTH, 1);
+						newStartDate.set(Calendar.HOUR_OF_DAY, 8);
+						// newStartDate.set(Calendar.MINUTE, 0);
+						Calendar newEndDate = enddate;
+						newEndDate.add(Calendar.DAY_OF_MONTH, 1);
+						newEndDate.set(Calendar.HOUR_OF_DAY, 9);
+						checkDate(newStartDate, newEndDate);
 					}
 				}
 
