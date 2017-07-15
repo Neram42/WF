@@ -17,17 +17,25 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import org.camunda.bpm.engine.delegate.DelegateExecution;
+import org.camunda.bpm.engine.delegate.JavaDelegate;
+
 //TODO: Exception handling
 
-public class ArrangeInterviewDate {
+public class ArrangeInterviewDate implements JavaDelegate {
 
 	// Variable to show the time in the right format if needed
 	public static SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMM dd HH");
 	
+	//TODO: Die Variablen eventuell durch Field Injection füllen?!
 	public static String subject;
 	public static String body;
-
-	public static void main(String[] args) {
+	
+	/*
+	 * This method is called during process execution and will execute the logic
+	 * @see org.camunda.bpm.engine.delegate.JavaDelegate#execute(org.camunda.bpm.engine.delegate.DelegateExecution)
+	 */
+	public void execute(DelegateExecution arg0) throws Exception {
 
 		// Initialize the startdate of the interview
 		Calendar startdate = new GregorianCalendar();
@@ -49,8 +57,31 @@ public class ArrangeInterviewDate {
 		body = "Hello \n this meeting is a job interview for the applicant...";
 
 		checkDate(startdate, enddate);
-
+		
 	}
+
+//	public static void main(String[] args) {
+//		// Initialize the startdate of the interview
+//		Calendar startdate = new GregorianCalendar();
+//		// add five days
+//		startdate.add(Calendar.DAY_OF_MONTH, 5);
+//		// set the start time at 8 in the morning
+//		startdate.set(Calendar.HOUR_OF_DAY, 8);
+//		startdate.set(Calendar.MINUTE, 0);
+//		// Initialize end time of the interview
+//		Calendar enddate = new GregorianCalendar();
+//		enddate.add(Calendar.DAY_OF_MONTH, 5);
+//		enddate.set(Calendar.HOUR_OF_DAY, 9);
+//		enddate.set(Calendar.MINUTE, 0);
+//		
+//		//Set subject and body of interview
+//		//TODO: Name des Applicants bzw Applicant ID
+//		//TODO: PDF der Bewerbung?? bzw. Bewerbungsdokument
+//		subject = "Interview with Applicant";
+//		body = "Hello \n this meeting is a job interview for the applicant...";
+//
+//		checkDate(startdate, enddate);
+//	}
 
 	/*
 	 * This method establishes a connection to the Exchange server. The exchange
@@ -211,5 +242,7 @@ public class ArrangeInterviewDate {
 		}
 
 	}
+
+
 
 }
