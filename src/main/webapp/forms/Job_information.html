@@ -10,14 +10,16 @@
  <form role="form" name="form">
   <div class="form-group">
     Department:<br>
-    <input cam-variable-name="department"
+    <input required 
+		   cam-variable-name="department"
            cam-variable-type="String"
            class="form-control" />
   </div>
   <br>
   <div class="form-group">
     Location:<br>
-    <input cam-variable-name="location"
+    <input required 
+	       cam-variable-name="location"
            cam-variable-type="String"
            class="form-control" />
   </div>
@@ -25,6 +27,8 @@
   <div class="form-group">
     Job Position:<br>
     <input cam-variable-name="job_position"
+    <input required
+	       cam-variable-name="jobPosition"
            cam-variable-type="String"
            class="form-control" />
   </div>
@@ -40,19 +44,25 @@
     Job Description:<br>
 	<textarea cam-variable-name="job_description"
             cam-variable-type="String">
+    Job Description:<br>
+	<textarea required
+	          cam-variable-name="jobDescription"
+              cam-variable-type="String">
   </textarea>
   </div>
   <br>
   <div class="form-group">
     Requirements:<br>
-    <input cam-variable-name="requirements"
+    <input required 
+	       cam-variable-name="requirements"
            cam-variable-type="String"
            class="form-control" />
   </div>
   <br>
   <div class="form-group">
     Salary:<br>
-    <input cam-variable-name="salary"
+    <input required
+	       cam-variable-name="salary"
            cam-variable-type="Double"
            class="form-control" />
   </div>
