@@ -158,7 +158,7 @@
       <bpmn:incoming>SequenceFlow_1nf4u9w</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1s5u7nr</bpmn:outgoing>
     </bpmn:sendTask>
-    <bpmn:serviceTask id="arrange_interview_date" name="Arrange interview date" camunda:class="$(arrangeInterviewBean)">
+    <bpmn:serviceTask id="arrange_interview_date" name="Arrange interview date" camunda:class="org.camunda.wf.hiring.arrange.ArrangeInterviewDate">
       <bpmn:incoming>SequenceFlow_1oriags</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1nf4u9w</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -241,7 +241,7 @@ system.out.println('Refuse invitation');]]></bpmn:conditionExpression>
     <bpmn:sequenceFlow id="SequenceFlow_1g4rbun" sourceRef="ExclusiveGateway_1o44nzt" targetRef="signed_contract_received" />
     <bpmn:sequenceFlow id="SequenceFlow_0qx7d9t" sourceRef="refusal_received_applicant" targetRef="ExclusiveGateway_11kge56" />
     <bpmn:sequenceFlow id="SequenceFlow_0ltoi33" sourceRef="signed_contract_received" targetRef="send_payment" />
-    <bpmn:serviceTask id="send_payment" name="Send payment to WEBPLACM" camunda:class="$(sendPaymentBean)">
+    <bpmn:serviceTask id="send_payment" name="Send payment to WEBPLACM" camunda:class="org.camunda.wf.hiring.arrange.sendPayment">
       <bpmn:incoming>SequenceFlow_0ltoi33</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0hye9v1</bpmn:outgoing>
       <bpmn:property id="Property_0t7br1l" name="__targetRef_placeholder" />
