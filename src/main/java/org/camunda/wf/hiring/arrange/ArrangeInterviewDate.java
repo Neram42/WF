@@ -13,12 +13,20 @@ import microsoft.exchange.webservices.data.search.CalendarView;
 import microsoft.exchange.webservices.data.search.FindItemsResults;
 
 import java.net.URI;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
+
 
 //TODO: Exception handling
 
@@ -161,18 +169,20 @@ public class ArrangeInterviewDate implements JavaDelegate {
 				if (findResults1.getItems().isEmpty() && findResults2.getItems().isEmpty()
 						&& findResults3.getItems().isEmpty()) {
 					System.out.println("The participants are all free at " + startdate.getTime());
+					
 
-					// TODO: HIER CAMUNDA AUFRUF UND WARTEN AUF ANTWORT ERST
-					// DANN
-					// WERDEN APPOINTMENTS IN OUTLOOK ERSTELLT
-
-					// If the calendars are empty at the given time an
-					// appointment
-					// in the calendars is done
-					// TODO: specify Body and subject!!
-					writeCalendar(startdate, enddate, subject, body, service1, participant1, participant2);
-
-					// TODO: INFORMATIONSWEITERGABE AN CAMUNDA
+					Context context = new InitialContext();
+					DataSource dataSource = (DataSource) context.lookup("java:comp/env/jdbc/d0270820");
+					
+					Connection conn =dataSource.getConnection();
+					Statement state = conn.createStatement();
+					ResultSet rs = state.executeQuery("SELECT instanceID from CV");
+					ResultSet saveDate = state.executeQuery("INSERT into Interview (instanceID, interviewDate) values ("+ rs.getString(1) + ", " + startdate + ")");
+					rs.close();
+					saveDate.close();
+					
+					
+					//writeCalendar(startdate, enddate, subject, body, service1, participant1, participant2);
 
 				} else {
 					// Set no date after 17:00
@@ -215,6 +225,7 @@ public class ArrangeInterviewDate implements JavaDelegate {
 	/*
 	 * This method enables accessing the calendar of a defined user and write a
 	 * new date into it.
+	 * TODO: Delete here later (redirected to WriteDate.java)
 	 */
 	public static void writeCalendar(Calendar startdate, Calendar enddate, String subject, String body,
 			ExchangeService service, String participant1, String participant2) {
