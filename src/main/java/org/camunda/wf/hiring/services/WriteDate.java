@@ -1,4 +1,4 @@
-package org.camunda.wf.hiring.arrange;
+package org.camunda.wf.hiring.services;
 
 import java.net.URI;
 import java.util.Calendar;

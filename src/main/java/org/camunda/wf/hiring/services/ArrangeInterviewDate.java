@@ -1,4 +1,4 @@
-package org.camunda.wf.hiring.arrange;
+package org.camunda.wf.hiring.services;
 
 import microsoft.exchange.webservices.data.core.ExchangeService;
 import microsoft.exchange.webservices.data.core.enumeration.misc.ExchangeVersion;

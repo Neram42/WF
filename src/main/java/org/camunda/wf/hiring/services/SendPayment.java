@@ -1,4 +1,4 @@
-package org.camunda.wf.hiring.arrange;
+package org.camunda.wf.hiring.services;
 
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
