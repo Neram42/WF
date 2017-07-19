@@ -3,6 +3,13 @@ package org.camunda.wf.hiring.OutlookAccess;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import microsoft.exchange.webservices.data.core.ExchangeService;
+import microsoft.exchange.webservices.data.core.enumeration.property.WellKnownFolderName;
+import microsoft.exchange.webservices.data.core.service.folder.CalendarFolder;
+import microsoft.exchange.webservices.data.core.service.item.Appointment;
+import microsoft.exchange.webservices.data.search.CalendarView;
+import microsoft.exchange.webservices.data.search.FindItemsResults;
+
 public class ArrangementDateGenerator {
 	
 	public ArrangementDateGenerator(){
@@ -44,5 +51,20 @@ public class ArrangementDateGenerator {
 		Calendar newDate = date;
 		newDate.set(Calendar.HOUR_OF_DAY, hour);
 		return newDate;
+	}
+	
+	
+	public static FindItemsResults<Appointment> findAppointments(ExchangeService service, Calendar startdate, Calendar enddate){
+		CalendarFolder cf1;
+		try {
+			cf1 = CalendarFolder.bind(service, WellKnownFolderName.Calendar);
+			FindItemsResults<Appointment> findResults = cf1
+					.findAppointments(new CalendarView(startdate.getTime(), enddate.getTime()));
+			return findResults;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 	}
 }

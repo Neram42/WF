@@ -179,7 +179,12 @@ system.out.println('Change Request');]]></bpmn:conditionExpression>
       <bpmn:incoming>SequenceFlow_16rvn2e</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_13eahit</bpmn:outgoing>
     </bpmn:inclusiveGateway>
-    <bpmn:serviceTask id="arrange_interview_date" name="Search interview date" camunda:class="org.camunda.wf.hiring.arrange.ArrangeInterviewDate">
+    <bpmn:serviceTask id="arrange_interview_date" name="Search interview date" camunda:class="org.camunda.wf.hiring.services.ArrangeInterviewDate">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="instanceID" />
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_1oriags</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1nf4u9w</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -234,7 +239,7 @@ system.out.println('Change Request');]]></bpmn:conditionExpression>
       <bpmn:outgoing>SequenceFlow_0ltoi33</bpmn:outgoing>
       <bpmn:messageEventDefinition messageRef="Message_04r652i" />
     </bpmn:intermediateCatchEvent>
-    <bpmn:serviceTask id="send_payment" name="Send payment to WEBPLACM" camunda:class="org.camunda.wf.hiring.arrange.sendPayment">
+    <bpmn:serviceTask id="send_payment" name="Send payment to WEBPLACM" camunda:class="org.camunda.wf.hiring.services.sendPayment">
       <bpmn:incoming>SequenceFlow_0ltoi33</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0hye9v1</bpmn:outgoing>
       <bpmn:property id="Property_0t7br1l" name="__targetRef_placeholder" />
@@ -290,7 +295,7 @@ system.out.println('Accept Applicant');]]></bpmn:conditionExpression>
       <bpmn:outgoing>SequenceFlow_0s266oc</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_0qd1sac</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:serviceTask id="Task_19ix27y" name="Write Date into Outlook calendar" camunda:class="org.camunda.wf.hiring.arrange.WriteDate">
+    <bpmn:serviceTask id="Task_19ix27y" name="Write Date into Outlook calendar" camunda:class="org.camunda.wf.hiring.services.WriteDate">
       <bpmn:incoming>SequenceFlow_0s266oc</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_132o6cm</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -310,7 +315,7 @@ system.out.println('Accept Applicant');]]></bpmn:conditionExpression>
       <bpmn:outgoing>SequenceFlow_0o90e2n</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="SequenceFlow_1dpbbjq" sourceRef="Task_0n7xkhx" targetRef="ExclusiveGateway_1i1206z" />
-    <bpmn:serviceTask id="Task_0n7xkhx" name="Delete Arrangement in Outlook" camunda:class="org.camunda.wf.hiring.arrange.DeleteArrangement">
+    <bpmn:serviceTask id="Task_0n7xkhx" name="Delete Arrangement in Outlook" camunda:class="org.camunda.wf.hiring.services.DeleteArrangement">
       <bpmn:incoming>SequenceFlow_11y9l8w</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1dpbbjq</bpmn:outgoing>
     </bpmn:serviceTask>

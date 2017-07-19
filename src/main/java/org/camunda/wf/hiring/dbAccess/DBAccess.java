@@ -48,5 +48,19 @@ public class DBAccess {
 		state.close();
 		connection.close();
 	}
+	
+	
+	public static void updateInterviewStatusToDB(String instanceID, String status) throws SQLException{
+		getConnection();
+
+		Statement state = connection.createStatement();
+
+		String query = "INSERT INTO interview (status) VALUES ('" + status + "');";
+		System.out.println(query);
+		state.executeUpdate(query);
+		
+		state.close();
+		connection.close();
+	}
 
 }

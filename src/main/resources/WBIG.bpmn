@@ -180,6 +180,11 @@ system.out.println('Change Request');]]></bpmn:conditionExpression>
       <bpmn:outgoing>SequenceFlow_13eahit</bpmn:outgoing>
     </bpmn:inclusiveGateway>
     <bpmn:serviceTask id="arrange_interview_date" name="Search interview date" camunda:class="org.camunda.wf.hiring.services.ArrangeInterviewDate">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="instanceID" />
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_1oriags</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1nf4u9w</bpmn:outgoing>
     </bpmn:serviceTask>
