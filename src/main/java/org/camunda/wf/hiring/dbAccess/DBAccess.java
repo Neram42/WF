@@ -2,16 +2,15 @@ package org.camunda.wf.hiring.dbAccess;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Calendar;
 
 public class DBAccess {
 
-	private static String url = "jdbc:mysql://localhost:3306/d0270820";
-	private static String username = "root";
-	private static String password = "root";
+	private static String url = "jdbc:mysql://localhost:3306/wfm";
+	private static String username = "wfm";
+	private static String password = "wfm2017";
 
 	private static Connection connection;
 

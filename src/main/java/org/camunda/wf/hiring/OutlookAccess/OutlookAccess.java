@@ -21,7 +21,6 @@ public class OutlookAccess {
 	 * This method establishes a connection to the Exchange server. The exchange
 	 * server enables access to mails, calendars etc.
 	 */
-
 	public static ExchangeService getOutlookAccess(String email, String password) {
 		ExchangeService service = new ExchangeService(ExchangeVersion.Exchange2010_SP2);
 		ExchangeCredentials credentials = new WebCredentials(email, password);
@@ -59,7 +58,7 @@ public class OutlookAccess {
 	
 	/*
 	 * This method enables accessing the calendar of a defined user and write a
-	 * new date into it. TODO: Delete here later (redirected to WriteDate.java)
+	 * new date into it.
 	 */
 	public static void writeCalendar(Calendar startdate, Calendar enddate, String subject, String body,
 			ExchangeService service, String participant1, String participant2) {

@@ -6,13 +6,12 @@ import java.util.GregorianCalendar;
 
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
+import org.camunda.wf.hiring.OutlookAccess.OutlookAccess;
 
 import microsoft.exchange.webservices.data.core.ExchangeService;
 import microsoft.exchange.webservices.data.core.enumeration.misc.ExchangeVersion;
-import microsoft.exchange.webservices.data.core.service.item.Appointment;
 import microsoft.exchange.webservices.data.credential.ExchangeCredentials;
 import microsoft.exchange.webservices.data.credential.WebCredentials;
-import microsoft.exchange.webservices.data.property.complex.MessageBody;
 
 public class WriteDate implements JavaDelegate {
 
@@ -36,7 +35,7 @@ public class WriteDate implements JavaDelegate {
 				ExchangeService service = 
 						getOutlookAccess("hr_representive@outlook.de", "HRrepresentive");
 				
-		writeCalendar(startdate, enddate, subject, body, service, "HR_employee@outlook.de", "Vice_president@outlook.de");
+		OutlookAccess.writeCalendar(startdate, enddate, subject, body, service, "HR_employee@outlook.de", "Vice_president@outlook.de");
 	}
 	
 	public static ExchangeService getOutlookAccess(String email, String password) {
@@ -54,35 +53,5 @@ public class WriteDate implements JavaDelegate {
 		}
 	}
 	
-	/*
-	 * This method enables accessing the calendar of a defined user and write a
-	 * new date into it.
-	 */
-	public static void writeCalendar(Calendar startdate, Calendar enddate, String subject, String body,
-			ExchangeService service, String participant1, String participant2) {
-		try {
-			// Set up a new appointment
-			Appointment appointment = new Appointment(service);
-			appointment.setSubject(subject);
-			appointment.setBody(MessageBody.getMessageBodyFromText(body));
-
-			// Set the required attendees
-			appointment.getRequiredAttendees().add(participant1);
-			appointment.getRequiredAttendees().add(participant2);
-
-			// Set start and enddate
-			appointment.setStart(startdate.getTime());
-			appointment.setEnd(enddate.getTime());
-
-			// Save appointment
-			appointment.getStart();
-			appointment.save();
-
-		} catch (Exception e) {
-			// TODO: Exception handling
-			System.out.println("Dates not set");
-		}
-
-	}
 
 }
