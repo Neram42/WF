@@ -2,6 +2,7 @@ package org.camunda.wf.hiring.dbAccess;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Calendar;
@@ -48,5 +49,19 @@ public class DBAccess {
 		state.close();
 		connection.close();
 	}
+	
+	// This method is used to get accepted interviewees 
+		public void getSumOfSalaries() throws SQLException {
+
+			getConnection();
+			Statement state = connection.createStatement();
+			
+			String query = "SELECT SUM(potentialSalary) as sum FROM Interview WHERE status = 'accepted'";
+			ResultSet result = state.executeQuery(query);
+			result.next();
+			System.out.println(result.getDouble("sum"));
+			state.close();
+			connection.close();
+		}
 
 }

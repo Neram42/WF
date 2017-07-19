@@ -23,7 +23,7 @@ public class ArrangeInterviewDate implements JavaDelegate {
 	// Variable to show the time in the right format if needed
 	public static SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMM dd HH");
 
-	// TODO: Die Variablen eventuell durch Field Injection füllen?!
+	// TODO: Die Variablen eventuell durch Field Injection fï¿½llen?!
 	public static String subject;
 	public static String body;
 	// Initialization of the access to the three accounts and save their
@@ -66,11 +66,12 @@ public class ArrangeInterviewDate implements JavaDelegate {
 
 	}
 
+
 	/*
 	 * THIS METHOD IS ONLY FOR TEST REASONS!! TODO: DELETE CONTENT BEOFRE
 	 * SUBMISSION
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 
 		Calendar startdate = ArrangementDateGenerator.setStartdate();
 		Calendar enddate = ArrangementDateGenerator.setStartdate();
@@ -88,7 +89,7 @@ public class ArrangeInterviewDate implements JavaDelegate {
 		service3 = OutlookAccess.getOutlookAccess(participant2, "HRrepresentive");
 
 		checkDate(startdate, enddate);
-	}
+	}*/
 
 	/*
 	 * This method searches for a date in the given time where the three
