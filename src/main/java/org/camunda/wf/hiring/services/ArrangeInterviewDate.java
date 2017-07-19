@@ -11,6 +11,7 @@ import microsoft.exchange.webservices.data.credential.WebCredentials;
 import microsoft.exchange.webservices.data.property.complex.MessageBody;
 import microsoft.exchange.webservices.data.search.CalendarView;
 import microsoft.exchange.webservices.data.search.FindItemsResults;
+import ord.camunda.wf.hiring.dbAccess.DBAccess;
 
 import java.net.URI;
 import java.security.spec.RSAKeyGenParameterSpec;
@@ -158,6 +159,9 @@ public class ArrangeInterviewDate implements JavaDelegate {
 		try {
 			// After checking if start and enddate not on the weekend...
 			// Lookup in each calendar to check if the date is already occupied
+			
+			
+			//TODO: OUTLOOK PACKAGE?!
 
 			if (enddate.get(Calendar.DAY_OF_WEEK) != 1 || enddate.get(Calendar.DAY_OF_WEEK) != 7) {
 
@@ -177,64 +181,16 @@ public class ArrangeInterviewDate implements JavaDelegate {
 				if (findResults1.getItems().isEmpty() && findResults2.getItems().isEmpty()
 						&& findResults3.getItems().isEmpty()) {
 					System.out.println("The participants are all free at " + startdate.getTime());
-			
-					
-					//Access on the hostes Databas
-//					MysqlDataSource dataSource = new MysqlDataSource();
-//					dataSource.setUser("d0270820");
-//					dataSource.setPassword("A5Dz6HTDWYpNd4JV");
-//					dataSource.setServerName("dd27112.kasserver.com:3306/d0270820");
-//					dataSource.setServerName("jdbc:mysql://localhost:3306/d0270820");
-//					
-//					System.out.println(dataSource.getDatabaseName());
-//					
-//					Connection conn = dataSource.getConnection();
-//					Statement state = conn.createStatement();
-//					System.out.println("Connection!");
-//					
-//					ResultSet rs = state.executeQuery("SELECT instanceID from CV");
-//					ResultSet saveDate = state.executeQuery("INSERT into Interview (instanceID, interviewDate) values ("+ rs.getString(1) + ", " + startdate + ")");
-//
-//					System.out.println(rs.getInt(1));
-//					rs.close();
-//					saveDate.close();
-//					
-					
-					//Access on the localhost database
-					String url = "jdbc:mysql://localhost:3306/d0270820";
-					String username =  "root";
-					String password = "root";
 
-					System.out.println("Connecting database...");
+					// Save the date temporarily on the localhost database
+					// The status is set to TODO ... to show that the interview
+					// is planned
+					// TODO get the instanceID from a processvariable
+					DBAccess.addInterviewToDB("int2", startdate, 1);
 
-					try (Connection connection = DriverManager.getConnection(url, username, password)) {
-					    System.out.println("Database connected!");
-					    
-					    Statement state = connection.createStatement();
-					    System.out.println("Statement created!" + state.toString());
-					    
-					    ResultSet rs = state.executeQuery("SELECT instanceID from cv");
-//					    ResultSet rs = state.executeQuery("INSERT into d0270820.cv (0) values (testid)");
-//						ResultSet saveDate = state.executeQuery("INSERT into Interview (instanceID, interviewDate) values ("+ rs.getString(1) + ", " + startdate + ")");
-	
-					    
-					    while (rs.next()) {
-					    	// Get the data from the row using the column index
-					    	 String s = rs.getString(1); 
-					    	System.out.println("Ausgabe: " + s);
-							ResultSet saveDate = state.executeQuery("INSERT into Interview (instanceID, interviewDate) values ("+ rs.getString(1) + ", " + startdate + ")");
-					    	}
+					// writeCalendar(startdate, enddate, subject, body,
+					// service1, participant1, participant2);
 
-
-//						rs.close();
-						
-//						saveDate.close();
-						
-						connection.close();
-			
-				
-					//writeCalendar(startdate, enddate, subject, body, service1, participant1, participant2);
-					}
 				} else {
 					// Set no date after 17:00
 					if (enddate.get(Calendar.HOUR_OF_DAY) < 17) {

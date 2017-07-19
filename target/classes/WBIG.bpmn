@@ -155,7 +155,7 @@
     </bpmn:intermediateCatchEvent>
     <bpmn:sequenceFlow id="SequenceFlow_0x1esqv" sourceRef="ExclusiveGateway_015peq8" targetRef="CV_received" />
     <bpmn:sequenceFlow id="SequenceFlow_0kdfrtd" sourceRef="CV_received" targetRef="Select_final_candidates" />
-    <bpmn:userTask id="Select_final_candidates" name="Select final candidates" camunda:formKey="embedded:forms/Candidate_Acceptance.html" camunda:candidateGroups="recruiting">
+    <bpmn:userTask id="Select_final_candidates" name="Select final candidates" camunda:candidateGroups="recruiting">
       <bpmn:incoming>SequenceFlow_0kdfrtd</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_03fvimz</bpmn:outgoing>
     </bpmn:userTask>
@@ -202,7 +202,7 @@ system.out.println('Change Request');]]></bpmn:conditionExpression>
       <bpmn:outgoing>SequenceFlow_0ybmvnh</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_1yviq47</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:userTask id="accept_applicant" name="Accept applicant" camunda:candidateGroups="recruiting">
+    <bpmn:userTask id="accept_applicant" name="Accept applicant" camunda:formKey="embedded:forms/Candidate_Acceptance.html" camunda:candidateGroups="recruiting">
       <bpmn:incoming>SequenceFlow_1yviq47</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_00418i5</bpmn:outgoing>
       <bpmn:dataOutputAssociation id="DataOutputAssociation_083su6b">
