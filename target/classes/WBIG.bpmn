@@ -52,6 +52,7 @@
         <bpmn:flowNodeRef>ExclusiveGateway_11kge56</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>invitation_response</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>ExclusiveGateway_1l74bid</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_0n7xkhx</bpmn:flowNodeRef>
         <bpmn:childLaneSet xsi:type="bpmn:tLaneSet">
           <bpmn:lane id="recruiting_department_lane" name="Recruiting department">
             <bpmn:flowNodeRef>start_event</bpmn:flowNodeRef>
@@ -80,6 +81,7 @@
             <bpmn:flowNodeRef>ExclusiveGateway_11kge56</bpmn:flowNodeRef>
             <bpmn:flowNodeRef>invitation_response</bpmn:flowNodeRef>
             <bpmn:flowNodeRef>ExclusiveGateway_1l74bid</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>Task_0n7xkhx</bpmn:flowNodeRef>
           </bpmn:lane>
           <bpmn:lane id="Hrrepresentative_lane" name="HR representitive">
             <bpmn:flowNodeRef>arrange_interview_date</bpmn:flowNodeRef>
@@ -160,7 +162,7 @@
     <bpmn:sequenceFlow id="SequenceFlow_03fvimz" sourceRef="Select_final_candidates" targetRef="ExclusiveGateway_1i1206z" />
     <bpmn:sequenceFlow id="SequenceFlow_1oriags" sourceRef="ExclusiveGateway_1i1206z" targetRef="arrange_interview_date" />
     <bpmn:sequenceFlow id="SequenceFlow_1nf4u9w" sourceRef="arrange_interview_date" targetRef="Task_13c96le" />
-    <bpmn:sequenceFlow id="SequenceFlow_11y9l8w" name="change request" sourceRef="ExclusiveGateway_1l74bid" targetRef="ExclusiveGateway_1i1206z">
+    <bpmn:sequenceFlow id="SequenceFlow_11y9l8w" name="change request" sourceRef="ExclusiveGateway_1l74bid" targetRef="Task_0n7xkhx">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression" language="JavaScript"><![CDATA[var system = java.lang.System;
 system.out.println('Change Request');]]></bpmn:conditionExpression>
     </bpmn:sequenceFlow>
@@ -188,12 +190,12 @@ system.out.println('Change Request');]]></bpmn:conditionExpression>
     </bpmn:userTask>
     <bpmn:inclusiveGateway id="ExclusiveGateway_1i1206z">
       <bpmn:incoming>SequenceFlow_03fvimz</bpmn:incoming>
-      <bpmn:incoming>SequenceFlow_11y9l8w</bpmn:incoming>
       <bpmn:incoming>SequenceFlow_0qd1sac</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_1dpbbjq</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1oriags</bpmn:outgoing>
     </bpmn:inclusiveGateway>
     <bpmn:sequenceFlow id="SequenceFlow_0s266oc" name="Confirmed" sourceRef="ExclusiveGateway_0z9313r" targetRef="Task_19ix27y" />
-    <bpmn:sequenceFlow id="SequenceFlow_0qd1sac" name="Deny" sourceRef="ExclusiveGateway_0z9313r" targetRef="ExclusiveGateway_1i1206z" />
+    <bpmn:sequenceFlow id="SequenceFlow_0qd1sac" name="Denied" sourceRef="ExclusiveGateway_0z9313r" targetRef="ExclusiveGateway_1i1206z" />
     <bpmn:sequenceFlow id="SequenceFlow_132o6cm" sourceRef="Task_19ix27y" targetRef="end_invitation" />
     <bpmn:exclusiveGateway id="ExclusiveGateway_0zfych9" name="Refuse or &#10;accept applicant">
       <bpmn:incoming>SequenceFlow_1sb6irl</bpmn:incoming>
@@ -288,7 +290,7 @@ system.out.println('Accept Applicant');]]></bpmn:conditionExpression>
       <bpmn:outgoing>SequenceFlow_0s266oc</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_0qd1sac</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:serviceTask id="Task_19ix27y" name="Write Date into Outlook calendar">
+    <bpmn:serviceTask id="Task_19ix27y" name="Write Date into Outlook calendar" camunda:class="org.camunda.wf.hiring.arrange.WriteDate">
       <bpmn:incoming>SequenceFlow_0s266oc</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_132o6cm</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -307,18 +309,23 @@ system.out.println('Accept Applicant');]]></bpmn:conditionExpression>
       <bpmn:outgoing>SequenceFlow_1xbdpk7</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_0o90e2n</bpmn:outgoing>
     </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="SequenceFlow_1dpbbjq" sourceRef="Task_0n7xkhx" targetRef="ExclusiveGateway_1i1206z" />
+    <bpmn:serviceTask id="Task_0n7xkhx" name="Delete Arrangement in Outlook" camunda:class="org.camunda.wf.hiring.arrange.DeleteArrangement">
+      <bpmn:incoming>SequenceFlow_11y9l8w</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1dpbbjq</bpmn:outgoing>
+    </bpmn:serviceTask>
     <bpmn:association id="Association_1yk6544" sourceRef="arrange_interview_date" targetRef="TextAnnotation_1pf3yn9" />
     <bpmn:textAnnotation id="TextAnnotation_1pf3yn9">    <bpmn:text>Vice president</bpmn:text>
 </bpmn:textAnnotation>
     <bpmn:textAnnotation id="TextAnnotation_00gmly0">    <bpmn:text>Applicant</bpmn:text>
-</bpmn:textAnnotation>
-    <bpmn:textAnnotation id="TextAnnotation_0te1l4c">    <bpmn:text>HR manager</bpmn:text>
 </bpmn:textAnnotation>
     <bpmn:textAnnotation id="TextAnnotation_12pi9uq">    <bpmn:text>Vice president</bpmn:text>
 </bpmn:textAnnotation>
     <bpmn:association id="Association_0wrwcwx" sourceRef="interview" targetRef="TextAnnotation_00gmly0" />
     <bpmn:association id="Association_1u83icp" sourceRef="interview" targetRef="TextAnnotation_0te1l4c" />
     <bpmn:association id="Association_0mdtafx" sourceRef="interview" targetRef="TextAnnotation_12pi9uq" />
+    <bpmn:textAnnotation id="TextAnnotation_0te1l4c">    <bpmn:text>HR manager</bpmn:text>
+</bpmn:textAnnotation>
   </bpmn:process>
   <bpmn:message id="Message_09d4h9x" name="weplacm_request" />
   <bpmn:message id="Message_1ctw5cw" name="weplacm_approval" />
@@ -593,11 +600,10 @@ system.out.println('Accept Applicant');]]></bpmn:conditionExpression>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_11y9l8w_di" bpmnElement="SequenceFlow_11y9l8w">
         <di:waypoint xsi:type="dc:Point" x="2433" y="230" />
-        <di:waypoint xsi:type="dc:Point" x="2433" y="137" />
-        <di:waypoint xsi:type="dc:Point" x="1601" y="137" />
-        <di:waypoint xsi:type="dc:Point" x="1601" y="230" />
+        <di:waypoint xsi:type="dc:Point" x="2433" y="123" />
+        <di:waypoint xsi:type="dc:Point" x="1930" y="123" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2556.585924713584" y="112.99999999999991" width="76" height="12" />
+          <dc:Bounds x="2332.6148447425894" y="103.49565098401237" width="76" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_1xbdpk7_di" bpmnElement="SequenceFlow_1xbdpk7">
@@ -921,7 +927,7 @@ system.out.println('Accept Applicant');]]></bpmn:conditionExpression>
         <di:waypoint xsi:type="dc:Point" x="1601" y="674" />
         <di:waypoint xsi:type="dc:Point" x="1601" y="280" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1768.0263929618768" y="653" width="26" height="12" />
+          <dc:Bounds x="1764" y="653" width="34" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_132o6cm_di" bpmnElement="SequenceFlow_132o6cm">
@@ -933,6 +939,17 @@ system.out.println('Accept Applicant');]]></bpmn:conditionExpression>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="ServiceTask_0cet95s_di" bpmnElement="Task_19ix27y">
         <dc:Bounds x="2063" y="528" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1dpbbjq_di" bpmnElement="SequenceFlow_1dpbbjq">
+        <di:waypoint xsi:type="dc:Point" x="1830" y="123" />
+        <di:waypoint xsi:type="dc:Point" x="1601" y="123" />
+        <di:waypoint xsi:type="dc:Point" x="1601" y="230" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1715.5" y="102" width="0" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_11qgslk_di" bpmnElement="Task_0n7xkhx">
+        <dc:Bounds x="1830" y="83" width="100" height="80" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

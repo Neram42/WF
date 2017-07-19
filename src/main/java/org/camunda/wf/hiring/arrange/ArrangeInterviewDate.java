@@ -13,12 +13,16 @@ import microsoft.exchange.webservices.data.search.CalendarView;
 import microsoft.exchange.webservices.data.search.FindItemsResults;
 
 import java.net.URI;
+import java.security.spec.RSAKeyGenParameterSpec;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Properties;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -27,6 +31,7 @@ import javax.sql.DataSource;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 
+import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
 //TODO: Exception handling
 
@@ -34,14 +39,17 @@ public class ArrangeInterviewDate implements JavaDelegate {
 
 	// Variable to show the time in the right format if needed
 	public static SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMM dd HH");
-	
-	//TODO: Die Variablen eventuell durch Field Injection füllen?!
+
+	// TODO: Die Variablen eventuell durch Field Injection füllen?!
 	public static String subject;
 	public static String body;
-	
+
 	/*
 	 * This method is called during process execution and will execute the logic
-	 * @see org.camunda.bpm.engine.delegate.JavaDelegate#execute(org.camunda.bpm.engine.delegate.DelegateExecution)
+	 * 
+	 * @see
+	 * org.camunda.bpm.engine.delegate.JavaDelegate#execute(org.camunda.bpm.
+	 * engine.delegate.DelegateExecution)
 	 */
 	public void execute(DelegateExecution arg0) throws Exception {
 
@@ -57,38 +65,38 @@ public class ArrangeInterviewDate implements JavaDelegate {
 		enddate.add(Calendar.DAY_OF_MONTH, 5);
 		enddate.set(Calendar.HOUR_OF_DAY, 9);
 		enddate.set(Calendar.MINUTE, 0);
-		
-		//Set subject and body of interview
-		//TODO: Name des Applicants bzw Applicant ID
-		//TODO: PDF der Bewerbung?? bzw. Bewerbungsdokument
+
+		// Set subject and body of interview
+		// TODO: Name des Applicants bzw Applicant ID
+		// TODO: PDF der Bewerbung?? bzw. Bewerbungsdokument
 		subject = "Interview with Applicant";
 		body = "Hello \n this meeting is a job interview for the applicant...";
 
-		//checkDate(startdate, enddate);
-		
+		// checkDate(startdate, enddate);
+
 	}
 
 	public static void main(String[] args) {
-//		// Initialize the startdate of the interview
-//		Calendar startdate = new GregorianCalendar();
-//		// add five days
-//		startdate.add(Calendar.DAY_OF_MONTH, 5);
-//		// set the start time at 8 in the morning
-//		startdate.set(Calendar.HOUR_OF_DAY, 8);
-//		startdate.set(Calendar.MINUTE, 0);
-//		// Initialize end time of the interview
-//		Calendar enddate = new GregorianCalendar();
-//		enddate.add(Calendar.DAY_OF_MONTH, 5);
-//		enddate.set(Calendar.HOUR_OF_DAY, 9);
-//		enddate.set(Calendar.MINUTE, 0);
-//		
-//		//Set subject and body of interview
-//		//TODO: Name des Applicants bzw Applicant ID
-//		//TODO: PDF der Bewerbung?? bzw. Bewerbungsdokument
-//		subject = "Interview with Applicant";
-//		body = "Hello \n this meeting is a job interview for the applicant...";
-//
-//		checkDate(startdate, enddate);
+		// Initialize the startdate of the interview
+		Calendar startdate = new GregorianCalendar();
+		// add five days
+		startdate.add(Calendar.DAY_OF_MONTH, 5);
+		// set the start time at 8 in the morning
+		startdate.set(Calendar.HOUR_OF_DAY, 8);
+		startdate.set(Calendar.MINUTE, 0);
+		// Initialize end time of the interview
+		Calendar enddate = new GregorianCalendar();
+		enddate.add(Calendar.DAY_OF_MONTH, 5);
+		enddate.set(Calendar.HOUR_OF_DAY, 9);
+		enddate.set(Calendar.MINUTE, 0);
+
+		// Set subject and body of interview
+		// TODO: Name des Applicants bzw Applicant ID
+		// TODO: PDF der Bewerbung?? bzw. Bewerbungsdokument
+		subject = "Interview with Applicant";
+		body = "Hello \n this meeting is a job interview for the applicant...";
+
+		checkDate(startdate, enddate);
 	}
 
 	/*
@@ -169,21 +177,64 @@ public class ArrangeInterviewDate implements JavaDelegate {
 				if (findResults1.getItems().isEmpty() && findResults2.getItems().isEmpty()
 						&& findResults3.getItems().isEmpty()) {
 					System.out.println("The participants are all free at " + startdate.getTime());
+			
 					
+					//Access on the hostes Databas
+//					MysqlDataSource dataSource = new MysqlDataSource();
+//					dataSource.setUser("d0270820");
+//					dataSource.setPassword("A5Dz6HTDWYpNd4JV");
+//					dataSource.setServerName("dd27112.kasserver.com:3306/d0270820");
+//					dataSource.setServerName("jdbc:mysql://localhost:3306/d0270820");
+//					
+//					System.out.println(dataSource.getDatabaseName());
+//					
+//					Connection conn = dataSource.getConnection();
+//					Statement state = conn.createStatement();
+//					System.out.println("Connection!");
+//					
+//					ResultSet rs = state.executeQuery("SELECT instanceID from CV");
+//					ResultSet saveDate = state.executeQuery("INSERT into Interview (instanceID, interviewDate) values ("+ rs.getString(1) + ", " + startdate + ")");
+//
+//					System.out.println(rs.getInt(1));
+//					rs.close();
+//					saveDate.close();
+//					
+					
+					//Access on the localhost database
+					String url = "jdbc:mysql://localhost:3306/d0270820";
+					String username =  "root";
+					String password = "root";
 
-					Context context = new InitialContext();
-					DataSource dataSource = (DataSource) context.lookup("java:comp/env/jdbc/d0270820");
-					
-					Connection conn =dataSource.getConnection();
-					Statement state = conn.createStatement();
-					ResultSet rs = state.executeQuery("SELECT instanceID from CV");
-					ResultSet saveDate = state.executeQuery("INSERT into Interview (instanceID, interviewDate) values ("+ rs.getString(1) + ", " + startdate + ")");
-					rs.close();
-					saveDate.close();
-					
-					
+					System.out.println("Connecting database...");
+
+					try (Connection connection = DriverManager.getConnection(url, username, password)) {
+					    System.out.println("Database connected!");
+					    
+					    Statement state = connection.createStatement();
+					    System.out.println("Statement created!" + state.toString());
+					    
+					    ResultSet rs = state.executeQuery("SELECT instanceID from cv");
+//					    ResultSet rs = state.executeQuery("INSERT into d0270820.cv (0) values (testid)");
+//						ResultSet saveDate = state.executeQuery("INSERT into Interview (instanceID, interviewDate) values ("+ rs.getString(1) + ", " + startdate + ")");
+	
+					    
+					    while (rs.next()) {
+					    	// Get the data from the row using the column index
+					    	 String s = rs.getString(1); 
+					    	System.out.println("Ausgabe: " + s);
+							ResultSet saveDate = state.executeQuery("INSERT into Interview (instanceID, interviewDate) values ("+ rs.getString(1) + ", " + startdate + ")");
+					    	}
+
+
+//						rs.close();
+						
+//						saveDate.close();
+						
+						connection.close();
+			
+				
 					//writeCalendar(startdate, enddate, subject, body, service1, participant1, participant2);
-
+					}
 				} else {
 					// Set no date after 17:00
 					if (enddate.get(Calendar.HOUR_OF_DAY) < 17) {
@@ -224,8 +275,7 @@ public class ArrangeInterviewDate implements JavaDelegate {
 
 	/*
 	 * This method enables accessing the calendar of a defined user and write a
-	 * new date into it.
-	 * TODO: Delete here later (redirected to WriteDate.java)
+	 * new date into it. TODO: Delete here later (redirected to WriteDate.java)
 	 */
 	public static void writeCalendar(Calendar startdate, Calendar enddate, String subject, String body,
 			ExchangeService service, String participant1, String participant2) {
