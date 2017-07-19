@@ -2,19 +2,11 @@ package org.camunda.wf.hiring.services;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
 import java.sql.SQLException;
-
-import javax.net.ssl.HttpsURLConnection;
-
 import org.camunda.bpm.engine.delegate.DelegateExecution;
-import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.camunda.wf.hiring.dbAccess.*;
 
 /*
@@ -36,11 +28,16 @@ public class SendPayment {
 	 */
 	public static void main(String[] args) {
 		SendPayment run = new SendPayment();
-		run.sendPaymentToProvider();
+		try {
+			run.sendPaymentToProvider();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	private double result;
-	public void sendPaymentToProvider() {
+	public void sendPaymentToProvider() throws Exception {
 		
 		// Get DB connection
 		DBAccess database = new DBAccess();
@@ -53,7 +50,7 @@ public class SendPayment {
 		}
 		
 
-		  String url = "";
+		  String url = "http://www.tewes.it/post_test.php";
 		  URL obj = new URL(url);
 		  HttpURLConnection conection = (HttpURLConnection) obj.openConnection();
 		 
@@ -63,7 +60,7 @@ public class SendPayment {
 		  conection.setRequestProperty("Content-Type","application/json");
 		 
 		  
-		  String jsonData = "'{'salary':"+String.valueOf(result)+",'countryName':'USA','population':8000}'";
+		  String jsonData = "'{'salary':"+String.valueOf(result)+"'}'";
 		  
 		  // Send post request
 		  conection.setDoOutput(true);
@@ -97,4 +94,3 @@ public class SendPayment {
 		// Get all participants which have been accepted and have a salary
 	
 	}
-}

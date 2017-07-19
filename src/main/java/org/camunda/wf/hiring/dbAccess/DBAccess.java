@@ -59,8 +59,9 @@ public class DBAccess {
 			String query = "SELECT SUM(potentialSalary) as sum FROM Interview WHERE status = 'accepted'";
 			ResultSet result = state.executeQuery(query);
 			result.next();
-			state.close();
-			connection.close();
+			
+		
+			
 			return result.getDouble("sum");
 		}
 
