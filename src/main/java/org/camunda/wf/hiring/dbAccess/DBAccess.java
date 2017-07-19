@@ -50,8 +50,8 @@ public class DBAccess {
 		connection.close();
 	}
 	
-	// This method is used to get accepted interviewees 
-		public void getSumOfSalaries() throws SQLException {
+	// This method is used to get the sum of all salaries of accepted applicants
+		public double getSumOfSalaries() throws SQLException {
 
 			getConnection();
 			Statement state = connection.createStatement();
@@ -59,9 +59,9 @@ public class DBAccess {
 			String query = "SELECT SUM(potentialSalary) as sum FROM Interview WHERE status = 'accepted'";
 			ResultSet result = state.executeQuery(query);
 			result.next();
-			System.out.println(result.getDouble("sum"));
 			state.close();
 			connection.close();
+			return result.getDouble("sum");
 		}
 
 }
