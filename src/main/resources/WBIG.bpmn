@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="1.8.1">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="1.8.2">
   <bpmn:collaboration id="Collaboration_1vz725x">
     <bpmn:participant id="company_lane" name="Company" processRef="hiring_process" />
     <bpmn:participant id="weplacm" name="WEPLACM" />
@@ -194,8 +194,12 @@ system.out.println('Change Request');]]></bpmn:conditionExpression>
       <bpmn:incoming>SequenceFlow_1dpbbjq</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1oriags</bpmn:outgoing>
     </bpmn:inclusiveGateway>
-    <bpmn:sequenceFlow id="SequenceFlow_0s266oc" name="Confirmed" sourceRef="ExclusiveGateway_0z9313r" targetRef="Task_19ix27y" />
-    <bpmn:sequenceFlow id="SequenceFlow_0qd1sac" name="Denied" sourceRef="ExclusiveGateway_0z9313r" targetRef="ExclusiveGateway_1i1206z" />
+    <bpmn:sequenceFlow id="SequenceFlow_0s266oc" name="Confirmed" sourceRef="ExclusiveGateway_0z9313r" targetRef="Task_19ix27y">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">true</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_0qd1sac" name="Denied" sourceRef="ExclusiveGateway_0z9313r" targetRef="ExclusiveGateway_1i1206z">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">false</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_132o6cm" sourceRef="Task_19ix27y" targetRef="end_invitation" />
     <bpmn:exclusiveGateway id="ExclusiveGateway_0zfych9" name="Refuse or &#10;accept applicant">
       <bpmn:incoming>SequenceFlow_1sb6irl</bpmn:incoming>
