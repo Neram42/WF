@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<h1 style="color: rgb(179,0,0)">WBIG</h1>
+<h2>Process response for contract</h2>
+</head>
+<body>
+
+<form role="form" name="form">
+  <script cam-script type="text/form-script">
+
+
+
+				camForm.on('form-loaded', function() {
+
+  					camForm.variableManager.fetchVariable('CV');
+
+				});
+
+				
+
+				camForm.on('variables-fetched', function() {
+
+  					$scope.jobInquiry = camForm.variableManager.variableValue('CV');
+
+				});
+
+
+
+			</script>
+			Name: {{CV.firstname}} {{CV.name}}
+  <br>
+  <button type="button">Accept</button>
+  <button type="button">Refuse</button>
+</form>
+</body>
+</html>
