@@ -2,7 +2,7 @@
 <html>
 <head>
 <h1 style="color: rgb(179,0,0)">WBIG</h1>
-<h2>Select final candidates</h2>
+<h2>Process response for contract</h2>
 </head>
 <body>
 
@@ -28,24 +28,10 @@
 
 
 			</script>
-		    
-			<table class="table">
-            <thead>
-            <tr>
-				<th>Firstname</th>
-				<th>Lastname</th>
-				<th>Decision</th>
-				</tr>
-			</thead>
-			<tbody>
-			<tr ng-repeat="cv in CV">
-				<td>{{cv.firstname}}</td>
-				<td>{{cv.name}}</td>
-				<td><input type="button" value="Accept"></td>
-			</tr>
-			</tbody>
-			</table>
-</div>
+			Name: {{CV.firstname}} {{CV.name}}
+  <br>
+  <button type="button">Accept</button>
+  <button type="button">Refuse</button>
 </form>
 </body>
 </html>
