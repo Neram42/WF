@@ -8,7 +8,7 @@ public class SelectCandidatesListener implements TaskListener {
 	public void notify(DelegateTask delegateTask){
 		//Set the Processvariable instanceID
 		//TODO: aus dem formular des User Task holen...
-		String instanceID = "ins1";
-		delegateTask.setVariable("instanceID", instanceID);
+//		String instanceID = "ins1";
+//		delegateTask.setVariable("instanceID", instanceID);
 	}
 }

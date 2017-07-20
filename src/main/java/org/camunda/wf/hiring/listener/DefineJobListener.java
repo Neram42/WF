@@ -17,7 +17,7 @@ public class DefineJobListener implements TaskListener{
 		String test = (String) delegateTask.getVariable("department");
 
 //		try {
-//			DBAccess.insertIntoJobOffer(test.toString());
+//			DBAccess.insertIntoJobOffer(test);
 //		} catch (SQLException e) {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();

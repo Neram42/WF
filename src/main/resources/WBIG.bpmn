@@ -211,7 +211,7 @@
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${confirmDate == true}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_0qd1sac" name="Denied" sourceRef="ExclusiveGateway_0z9313r" targetRef="ExclusiveGateway_1i1206z">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${confirmDate == false}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${denyDate == true}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_132o6cm" sourceRef="Task_19ix27y" targetRef="end_invitation" />
     <bpmn:exclusiveGateway id="ExclusiveGateway_0zfych9" name="Refuse or &#10;accept applicant">
