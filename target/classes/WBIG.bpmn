@@ -172,8 +172,7 @@
     <bpmn:sequenceFlow id="SequenceFlow_1oriags" sourceRef="ExclusiveGateway_1i1206z" targetRef="arrange_interview_date" />
     <bpmn:sequenceFlow id="SequenceFlow_1nf4u9w" sourceRef="arrange_interview_date" targetRef="Task_13c96le" />
     <bpmn:sequenceFlow id="SequenceFlow_11y9l8w" name="change request" sourceRef="ExclusiveGateway_1l74bid" targetRef="Task_0n7xkhx">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression" language="JavaScript"><![CDATA[var system = java.lang.System;
-system.out.println('Change Request');]]></bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${dateChangeRequest==true}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_16rvn2e" sourceRef="reqeust_new_cvs" targetRef="ExclusiveGateway_10npsiz" />
     <bpmn:sequenceFlow id="SequenceFlow_0tp2uk6" sourceRef="start_event" targetRef="ExclusiveGateway_1m8z1f4" />
@@ -209,10 +208,10 @@ system.out.println('Change Request');]]></bpmn:conditionExpression>
       <bpmn:outgoing>SequenceFlow_1oriags</bpmn:outgoing>
     </bpmn:inclusiveGateway>
     <bpmn:sequenceFlow id="SequenceFlow_0s266oc" name="Confirmed" sourceRef="ExclusiveGateway_0z9313r" targetRef="Task_19ix27y">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">true</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${confirmDate == true}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_0qd1sac" name="Denied" sourceRef="ExclusiveGateway_0z9313r" targetRef="ExclusiveGateway_1i1206z">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">false</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${confirmDate == false}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_132o6cm" sourceRef="Task_19ix27y" targetRef="end_invitation" />
     <bpmn:exclusiveGateway id="ExclusiveGateway_0zfych9" name="Refuse or &#10;accept applicant">
@@ -279,21 +278,17 @@ system.out.println('Change Request');]]></bpmn:conditionExpression>
     <bpmn:sequenceFlow id="SequenceFlow_1s5u7nr" sourceRef="end_invitation" targetRef="invitation_response" />
     <bpmn:sequenceFlow id="SequenceFlow_0u1imtn" sourceRef="invitation_response" targetRef="ExclusiveGateway_1l74bid" />
     <bpmn:sequenceFlow id="SequenceFlow_1xbdpk7" name="accept" sourceRef="ExclusiveGateway_1l74bid" targetRef="interview">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression" language="JavaScript"><![CDATA[var system = java.lang.System;
-system.out.println('Accept interview');]]></bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${dateAccept==true}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="SequenceFlow_0o90e2n" sourceRef="ExclusiveGateway_1l74bid" targetRef="ExclusiveGateway_11kge56">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression" language="JavaScript"><![CDATA[var system = java.lang.System;
-system.out.println('Refuse invitation');]]></bpmn:conditionExpression>
+    <bpmn:sequenceFlow id="SequenceFlow_0o90e2n" name="refusal" sourceRef="ExclusiveGateway_1l74bid" targetRef="ExclusiveGateway_11kge56">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${dateAccept==false}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_1sb6irl" sourceRef="interview" targetRef="ExclusiveGateway_0zfych9" />
     <bpmn:sequenceFlow id="SequenceFlow_0ybmvnh" name="refuse" sourceRef="ExclusiveGateway_0zfych9" targetRef="refuse_applicant">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression" language="JavaScript"><![CDATA[var system = java.lang.System;
-system.out.println('Refuse Applicant');]]></bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${acceptApplicant == false}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_1yviq47" name="accept" sourceRef="ExclusiveGateway_0zfych9" targetRef="accept_applicant">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression" language="JavaScript"><![CDATA[var system = java.lang.System;
-system.out.println('Accept Applicant');]]></bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${acceptApplicant==true}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_00418i5" sourceRef="accept_applicant" targetRef="ExclusiveGateway_1o44nzt" />
     <bpmn:sequenceFlow id="SequenceFlow_1lakb97" sourceRef="refuse_applicant" targetRef="ExclusiveGateway_11kge56" />
@@ -698,7 +693,7 @@ system.out.println('Accept Applicant');]]></bpmn:conditionExpression>
         <di:waypoint xsi:type="dc:Point" x="2778" y="175" />
         <di:waypoint xsi:type="dc:Point" x="3105" y="175" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2787" y="156" width="33" height="12" />
+          <dc:Bounds x="2798" y="158" width="33" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_1lakb97_di" bpmnElement="SequenceFlow_1lakb97">
@@ -714,7 +709,7 @@ system.out.println('Accept Applicant');]]></bpmn:conditionExpression>
         <di:waypoint xsi:type="dc:Point" x="2898" y="134" />
         <di:waypoint xsi:type="dc:Point" x="3095" y="321" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2656.5" y="113" width="90" height="12" />
+          <dc:Bounds x="2686" y="113" width="33" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="UserTask_0dn0jrt_di" bpmnElement="accept_applicant">
