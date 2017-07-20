@@ -87,4 +87,8 @@ public class OutlookAccess {
 
 	}
 	
+	public static void deleteAssignment(){
+		//TODO
+	}
+	
 }

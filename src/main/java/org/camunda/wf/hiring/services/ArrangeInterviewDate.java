@@ -1,5 +1,6 @@
 package org.camunda.wf.hiring.services;
 
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -23,8 +24,8 @@ public class ArrangeInterviewDate implements JavaDelegate {
 	// Variable to show the time in the right format if needed
 	public static SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMM dd HH");
 
-	// TODO: Die Variablen eventuell durch Field Injection füllen?!
-	public static String instanceID = "ins1";
+	// TODO: Die Variablen eventuell durch Field Injection füllen?!	
+	public static String instanceID;
 	// Initialization of the access to the three accounts and save their
 	// email addresses for further use
 	public static String initiator;
@@ -33,7 +34,7 @@ public class ArrangeInterviewDate implements JavaDelegate {
 	public static ExchangeService service1;
 	public static ExchangeService service2;
 	public static ExchangeService service3;
-	public static Integer test;
+
 
 	/*
 	 * This method is called during process execution and will execute the logic
@@ -44,22 +45,22 @@ public class ArrangeInterviewDate implements JavaDelegate {
 	 */
 	public void execute(DelegateExecution execution) throws Exception {
 		
-		test = (Integer) execution.getVariable("instanceID");
-		System.out.println(test);
+		instanceID = (String) execution.getVariable("instanceID");
 		
-		//TODO: Test ob Processvariable - Kennzeichen gesetzt ist, dass erst ab dem nächsten tag gesucht werden muss
+		System.out.println(instanceID);
 		
-		String flag = (String) execution.getVariable("Flag");
-		System.out.println(flag);
+		//TODO: Test ob Processvariable - Kennzeichen gesetzt ist, dass erst ab dem nächsten tag gesucht werden muss	
+		String varstartdate = (String) execution.getVariable("varstartdate");
+		System.out.println(varstartdate);
 		
 		
 		Calendar startdate = ArrangementDateGenerator.setStartdate();
 	
-		//Sollte das Flag gesetzt sein wird erst später gesucht
-		//TODO: Das startdate auch irgendwoher kriegen
-		if(flag == "1") {
+		//Sollte das startdate gesetzt sein wird einen Tag später später gesucht
+
+//		if(varstartdate != null) {
 			startdate = ArrangementDateGenerator.nextDay(startdate);
-		}
+//		}
 		
 		
 		Calendar enddate = ArrangementDateGenerator.setStartdate();
@@ -73,6 +74,9 @@ public class ArrangeInterviewDate implements JavaDelegate {
 		service3 = OutlookAccess.getOutlookAccess(participant2, "HRemployee");
 		
 		checkDate(startdate, enddate);
+		
+		//TODO: Hier am ende noch die Processvariable InterviewDate setzen um später damit weiterzuarbeiten
+		
 
 	}
 
@@ -81,7 +85,7 @@ public class ArrangeInterviewDate implements JavaDelegate {
 	 * THIS METHOD IS ONLY FOR TEST REASONS!! TODO: DELETE CONTENT BEOFRE
 	 * SUBMISSION
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
 	
 		Calendar startdate = ArrangementDateGenerator.setStartdate();
 		Calendar enddate = ArrangementDateGenerator.setStartdate();
@@ -94,7 +98,6 @@ public class ArrangeInterviewDate implements JavaDelegate {
 		service1 = OutlookAccess.getOutlookAccess(initiator, "HRrepresentive");
 		service2 = OutlookAccess.getOutlookAccess(participant1, "Vicepresident");
 		service3 = OutlookAccess.getOutlookAccess(participant2, "HRemployee");
-
 		
 
 		checkDate(startdate, enddate);
@@ -135,6 +138,7 @@ public class ArrangeInterviewDate implements JavaDelegate {
 
 					// Save the date temporarily on the localhost database
 					DBAccess.addInterviewToDB(instanceID, startdate, "Invitation sent");
+
 
 				} else {
 					// Set no date after 17:00
