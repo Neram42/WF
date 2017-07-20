@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<h1 style="color: rgb(179,0,0)">WBIG</h1>
+<h2>Confirm date</h2>
+</head>
+<body>
+
+<form role="form" name="form">
+  <div class="form-group">
+    Name:<br>
+    <input cam-variable-name="name"
+           cam-variable-type="String"
+           class="form-control" />
+  </div>
+  <br>
+  <div class="form-group">
+    Candidate Number:<br>
+    <input cam-variable-name="CandidateNumber"
+           cam-variable-type="Double"
+           class="form-control" />
+  </div>
+  <br>
+  <div class="form-group">
+   Date:<br>
+    <input cam-variable-name="date"
+           cam-variable-type="integer"
+           class="form-control" />
+  </div>
+  <br>
+  <div align="left">
+  <button type="button" onclick="alert('Thank you for confirmation')">Confirm</button>
+  </div>
+  <div align="left">
+  <button type="button" onclick="alert('Please select another date')">Deny</button>
+  </div>
+</form>
+</body>
+</html>
