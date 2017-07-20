@@ -9,9 +9,9 @@
 
  <form role="form" name="form">
   <div class="form-group">
-    Department:<br>
-    <input required 
-		   cam-variable-name="department"
+    Title:<br>
+    <input required
+	       cam-variable-name="title"
            cam-variable-type="String"
            class="form-control" />
   </div>
@@ -25,48 +25,35 @@
   </div>
   <br>
   <div class="form-group">
-    Job Position:<br>
-    <input cam-variable-name="job_position"
-    <input required
-	       cam-variable-name="jobPosition"
-           cam-variable-type="String"
-           class="form-control" />
+   Deadline:<br>
+   <input required
+    cam-variable-name="deadline"
+    cam-variable-type="String"
+    class="form-control" /> 
   </div>
-  <br>
+  <br>  
   <div class="form-group">
-    Job ID:<br>
-    <input cam-variable-name="job_id"
-           cam-variable-type="Double"
-           class="form-control" />
-  </div>
-  <br>
-  <div class="form-group">
-    Job Description:<br>
+    Requirements:<br>
 	<textarea required
-	          cam-variable-name="jobDescription"
+	          cam-variable-name=""
               cam-variable-type="String">
   </textarea>
   </div>
   <br>
   <div class="form-group">
-    Requirements:<br>
-    <input required 
-	       cam-variable-name="requirements"
-           cam-variable-type="String"
-           class="form-control" />
+   Candidate Profile:<br>
+	<textarea required
+	          cam-variable-name="candidateProfile"
+              cam-variable-type="String">
+  </textarea>
   </div>
   <br>
   <div class="form-group">
-    Salary:<br>
-    <input required
-	       cam-variable-name="salary"
-           cam-variable-type="Double"
-           class="form-control" />
-  </div>
-  <br>
-  <input type="radio" name="Condition" value="full-time" checked> Full-time<br>
-  <input type="radio" name="Condition" value="part-time"> Part-time<br>
-  <br>
+   Tasklist:<br>
+	<textarea required
+	          cam-variable-name="tasklist"
+              cam-variable-type="String">
+  </textarea>
   </div>
 </form>
 </body>

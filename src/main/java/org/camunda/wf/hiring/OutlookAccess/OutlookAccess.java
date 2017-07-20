@@ -5,6 +5,8 @@ import java.util.Calendar;
 
 import microsoft.exchange.webservices.data.core.ExchangeService;
 import microsoft.exchange.webservices.data.core.enumeration.misc.ExchangeVersion;
+import microsoft.exchange.webservices.data.core.enumeration.service.DeleteMode;
+import microsoft.exchange.webservices.data.core.exception.service.local.ServiceLocalException;
 import microsoft.exchange.webservices.data.core.service.item.Appointment;
 import microsoft.exchange.webservices.data.core.service.item.EmailMessage;
 import microsoft.exchange.webservices.data.credential.ExchangeCredentials;
@@ -60,7 +62,9 @@ public class OutlookAccess {
 	 * This method enables accessing the calendar of a defined user and write a
 	 * new date into it.
 	 */
-	public static void writeCalendar(Calendar startdate, Calendar enddate, String subject, String body,
+//	public static void writeCalendar(Calendar startdate, Calendar enddate, String subject, String body,
+//			ExchangeService service, String participant1, String participant2) {
+	public static Appointment writeCalendar(Calendar startdate, Calendar enddate, String subject, String body,
 			ExchangeService service, String participant1, String participant2) {
 		try {
 			// Set up a new appointment
@@ -74,21 +78,23 @@ public class OutlookAccess {
 
 			// Set start and enddate
 			appointment.setStart(startdate.getTime());
-			appointment.setEnd(enddate.getTime());
+			appointment.setEnd(enddate.getTime());	
 
 			// Save appointment
 			appointment.getStart();
 			appointment.save();
-
+			
+			return appointment;
 		} catch (Exception e) {
 			// TODO: Exception handling
 			System.out.println("Dates not set");
 		}
+		return null;
 
 	}
 	
-	public static void deleteAssignment(){
-		//TODO
+	public static void deleteArrangement(Appointment app) throws ServiceLocalException, Exception{
+		 app.delete(DeleteMode.HardDelete);
 	}
 	
 }
