@@ -41,24 +41,18 @@ public class CVReceiverServlet extends HttpServlet  {
 		
 		BufferedReader reader = request.getReader();
 		CV cv = objectMapper.readValue(reader, CV.class);
-		  // Work with the data using methods like...
-		  // int someInt = jsonObject.getInt("intParamName");
-		  // String someString = jsonObject.getString("stringParamName");
-		  // JSONObject nestedObj = jsonObject.getJSONObject("nestedObjName");
-		  // JSONArray arr = jsonObject.getJSONArray("arrayParamName");
-		  // etc...
 		
-		
+		String cvString = cv.toString();
 		PrintWriter out = response.getWriter();
 		out.println("<html><body>");
 	
 		String id = request.getParameter("id");
 		if (null == id) {
-			out.println("<h2>Error</h2><p>Parameter id missing!</p>"); } 
-					else {
+			out.println("<h2>Error</h2><p>Parameter id missing!</p>" + cvString); } 
+		else {
 			try {
 			runtimeService.createMessageCorrelation("continueMessage") .processInstanceId(id).correlate();
-			out.println("<h1>CVs delivered to process</h1><p>ID: " + id + "</p>"); }
+			out.println("<h1>CVs delivered to process</h1><p>ID: " + id + "</p>" + cvString); }
 			catch (MismatchingMessageCorrelationException e) {
 			out.println("<h2>Error</h2><p>No correlating process instance.</p><p>" + id + "</p>");
 			} }
@@ -93,12 +87,6 @@ class CV {
 
     public CV(String instanceID,String name, String address,String email,Calendar birthday,String study,String degree,String grade,String sectors,String specialSkills,String practicalExperience,int rating ) {
       
-    }
-
-
-    @Override
-    public String toString() {
-        return "";
     }
 
 	public String getInstanceID() {
@@ -211,6 +199,13 @@ class CV {
 
 	public void setReceivedOn(Calendar receivedOn) {
 		this.receivedOn = receivedOn;
+	}
+	
+	@Override
+	public String toString(){
+		StringBuilder sb = new StringBuilder();
+		sb.append("Name="+getName()+"\n");
+		return sb.toString();
 	}
 
 }
