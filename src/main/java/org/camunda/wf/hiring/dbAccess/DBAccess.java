@@ -87,6 +87,7 @@ public class DBAccess {
 		state.executeUpdate(query);
 		
 		state.close();
+		connection.close();
 	}
 
 }

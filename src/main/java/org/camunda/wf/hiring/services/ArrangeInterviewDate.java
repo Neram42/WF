@@ -98,7 +98,7 @@ public class ArrangeInterviewDate implements JavaDelegate {
 		service1 = OutlookAccess.getOutlookAccess(initiator, "HRrepresentive");
 		service2 = OutlookAccess.getOutlookAccess(participant1, "Vicepresident");
 		service3 = OutlookAccess.getOutlookAccess(participant2, "HRemployee");
-		
+		 DBAccess.insertIntoJobOffer("department");
 
 		checkDate(startdate, enddate);
 	}
