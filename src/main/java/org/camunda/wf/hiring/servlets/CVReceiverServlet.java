@@ -43,9 +43,12 @@ public class CVReceiverServlet extends HttpServlet  {
 		CV cv = objectMapper.readValue(reader, CV.class);
 		
 		String cvString = cv.toString();
+		
+		
+		// build HTML output
 		PrintWriter out = response.getWriter();
+		response.setContentType("text/html");
 		out.println("<html><body>");
-	
 		String id = request.getParameter("id");
 		if (null == id) {
 			out.println("<h2>Error</h2><p>Parameter id missing!</p>" + cvString); } 
@@ -57,8 +60,6 @@ public class CVReceiverServlet extends HttpServlet  {
 			out.println("<h2>Error</h2><p>No correlating process instance.</p><p>" + id + "</p>");
 			} }
 			out.println("</body></html>");
-	   
-	    response.setContentType("text/html");
 	    out.close();
 	  }
 }
