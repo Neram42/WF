@@ -108,7 +108,7 @@
         <bpmn:targetRef>job_information_database</bpmn:targetRef>
       </bpmn:dataOutputAssociation>
     </bpmn:userTask>
-    <bpmn:sendTask id="provde_job_information" name="Provide job information" camunda:class="org.camunda.bpm.ProvideJobInformation">
+    <bpmn:sendTask id="provde_job_information" name="Provide job information" camunda:class="org.camunda.wf.hiring.sendMessages.ProvideJobInformation">
       <bpmn:incoming>SequenceFlow_1ar7lxu</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1epk7qw</bpmn:outgoing>
       <bpmn:property id="Property_1pqt9l0" name="__targetRef_placeholder" />

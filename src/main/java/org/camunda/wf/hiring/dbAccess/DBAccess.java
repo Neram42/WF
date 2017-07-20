@@ -33,7 +33,9 @@ public class DBAccess {
 		return connection;
 	}
 
-	// This method is used to insert
+	/*
+	 *  This method is used to insert the interview into the Database
+	 */
 	public static void addInterviewToDB(String instanceID, Calendar startdate, String status) throws SQLException {
 
 		getConnection();
@@ -63,7 +65,9 @@ public class DBAccess {
 		connection.close();
 	}
 	
-	
+	/*
+	 * This method updates the Status of the interview to the respective instanceID of the applicant
+	 */
 	public static void updateInterviewStatusToDB(String instanceID, String status) throws SQLException{
 		getConnection();
 
@@ -77,6 +81,10 @@ public class DBAccess {
 		connection.close();
 	}
 	
+	
+	/*
+	 * TEST method
+	 */
 	public static void insertIntoJobOffer(String value) throws SQLException{
 		getConnection();
 
@@ -90,7 +98,9 @@ public class DBAccess {
 		connection.close();
 	}
 	
-	// This method is used to get the sum of all salaries of accepted applicants
+	/*
+	 *  This method is used to get the sum of all salaries of accepted applicants
+	 */
 		public double getSumOfSalaries() throws SQLException {
 
 			getConnection();
