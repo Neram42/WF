@@ -19,11 +19,11 @@ import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.model.bpmn.builder.IntermediateCatchEventBuilder;
 
 @WebServlet(
-        name = "ContinueProcess",
-        description = "Calling the servlet leads to continuation. Can be used for debugging",
-        urlPatterns = "/ContinueProcess"
+        name = "ApprovalReceiver",
+        description = "Servlet for receiving the approval of job info. Calling the servlet leads to continuation",
+        urlPatterns = "/ApprovalReceiver"
 )
-public class ContinueProcessServlet extends HttpServlet  {
+public class ApprovalReceivedServlet extends HttpServlet  {
 	 @SuppressWarnings("deprecation")
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	  {

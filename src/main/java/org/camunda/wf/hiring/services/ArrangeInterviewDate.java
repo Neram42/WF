@@ -1,6 +1,5 @@
 package org.camunda.wf.hiring.services;
 
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -24,8 +23,9 @@ public class ArrangeInterviewDate implements JavaDelegate {
 	// Variable to show the time in the right format if needed
 	public static SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMM dd HH");
 
-	// TODO: Die Variablen eventuell durch Field Injection füllen?!	
-	public static String instanceID;
+	// TODO: Die Variablen eventuell durch Field Injection fï¿½llen?!
+	public static String subject;
+	public static String body;
 	// Initialization of the access to the three accounts and save their
 	// email addresses for further use
 	public static String initiator;
@@ -34,7 +34,7 @@ public class ArrangeInterviewDate implements JavaDelegate {
 	public static ExchangeService service1;
 	public static ExchangeService service2;
 	public static ExchangeService service3;
-
+	public static String instanceID;
 
 	/*
 	 * This method is called during process execution and will execute the logic
@@ -43,40 +43,26 @@ public class ArrangeInterviewDate implements JavaDelegate {
 	 * org.camunda.bpm.engine.delegate.JavaDelegate#execute(org.camunda.bpm.
 	 * engine.delegate.DelegateExecution)
 	 */
-	public void execute(DelegateExecution execution) throws Exception {
-		
-		instanceID = (String) execution.getVariable("instanceID");
-		
-		System.out.println(instanceID);
-		
-		//TODO: Test ob Processvariable - Kennzeichen gesetzt ist, dass erst ab dem nächsten tag gesucht werden muss	
-		String varstartdate = (String) execution.getVariable("varstartdate");
-		System.out.println(varstartdate);
-		
-		
-		Calendar startdate = ArrangementDateGenerator.setStartdate();
-	
-		//Sollte das startdate gesetzt sein wird einen Tag später später gesucht
+	public void execute(DelegateExecution arg0) throws Exception {
 
-//		if(varstartdate != null) {
-			startdate = ArrangementDateGenerator.nextDay(startdate);
-//		}
-		
-		
+		Calendar startdate = ArrangementDateGenerator.setStartdate();
 		Calendar enddate = ArrangementDateGenerator.setStartdate();
 		enddate = ArrangementDateGenerator.nextHour(enddate);
 
+		// Set subject and body of interview
+		// TODO: Name des Applicants bzw Applicant ID
+		subject = "Interview with Applicant";
+		body = "Hello \n this meeting is a job interview for the applicant...";
+		instanceID = "int2";
+
+		participant2 = "hr_employee@outlook.de";
 		initiator = "hr_representive@outlook.de";
 		participant1 = "vice_president@outlook.de";
-		participant2 = "hr_employee@outlook.de";
-		service1 = OutlookAccess.getOutlookAccess(initiator, "HRrepresentive");
+		service1 = OutlookAccess.getOutlookAccess(initiator, "HRemployee");
 		service2 = OutlookAccess.getOutlookAccess(participant1, "Vicepresident");
-		service3 = OutlookAccess.getOutlookAccess(participant2, "HRemployee");
-		
+		service3 = OutlookAccess.getOutlookAccess(participant2, "HRrepresentive");
+
 		checkDate(startdate, enddate);
-		
-		//TODO: Hier am ende noch die Processvariable InterviewDate setzen um später damit weiterzuarbeiten
-		
 
 	}
 
@@ -85,23 +71,25 @@ public class ArrangeInterviewDate implements JavaDelegate {
 	 * THIS METHOD IS ONLY FOR TEST REASONS!! TODO: DELETE CONTENT BEOFRE
 	 * SUBMISSION
 	 */
-	public static void main(String[] args) throws SQLException {
-	
+	/*public static void main(String[] args) {
+
 		Calendar startdate = ArrangementDateGenerator.setStartdate();
 		Calendar enddate = ArrangementDateGenerator.setStartdate();
 		enddate = ArrangementDateGenerator.nextHour(enddate);
 
+		// Set subject and body of interview
+		// TODO: Name des Applicants bzw Applicant ID
+		subject = "Interview with Applicant";
+		body = "Hello \n this meeting is a job interview for the applicant...";
+		participant2 = "hr_employee@outlook.de";
 		initiator = "hr_representive@outlook.de";
 		participant1 = "vice_president@outlook.de";
-		participant2 = "hr_employee@outlook.de";
-		
-		service1 = OutlookAccess.getOutlookAccess(initiator, "HRrepresentive");
+		service1 = OutlookAccess.getOutlookAccess(initiator, "HRemployee");
 		service2 = OutlookAccess.getOutlookAccess(participant1, "Vicepresident");
-		service3 = OutlookAccess.getOutlookAccess(participant2, "HRemployee");
-		 DBAccess.insertIntoJobOffer("department");
+		service3 = OutlookAccess.getOutlookAccess(participant2, "HRrepresentive");
 
 		checkDate(startdate, enddate);
-	}
+	}*/
 
 	/*
 	 * This method searches for a date in the given time where the three
@@ -114,10 +102,6 @@ public class ArrangeInterviewDate implements JavaDelegate {
 			// After checking if start and enddate not on the weekend...
 			// Lookup in each calendar to check if the date is already occupied
 			if (enddate.get(Calendar.DAY_OF_WEEK) != 1 || enddate.get(Calendar.DAY_OF_WEEK) != 7) {
-				
-//				FindItemsResults<Appointment> findResults1 = ArrangementDateGenerator.findAppointments(service1, startdate, enddate);
-//				FindItemsResults<Appointment> findResults2 = ArrangementDateGenerator.findAppointments(service2, startdate, enddate);
-//				FindItemsResults<Appointment> findResults3 = ArrangementDateGenerator.findAppointments(service3, startdate, enddate);
 
 				CalendarFolder cf1 = CalendarFolder.bind(service1, WellKnownFolderName.Calendar);
 				FindItemsResults<Appointment> findResults1 = cf1
@@ -138,7 +122,6 @@ public class ArrangeInterviewDate implements JavaDelegate {
 
 					// Save the date temporarily on the localhost database
 					DBAccess.addInterviewToDB(instanceID, startdate, "Invitation sent");
-
 
 				} else {
 					// Set no date after 17:00

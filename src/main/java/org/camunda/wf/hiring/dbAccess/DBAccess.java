@@ -89,5 +89,20 @@ public class DBAccess {
 		state.close();
 		connection.close();
 	}
+	
+	// This method is used to get the sum of all salaries of accepted applicants
+		public double getSumOfSalaries() throws SQLException {
+
+			getConnection();
+			Statement state = connection.createStatement();
+			
+			String query = "SELECT SUM(potentialSalary) as sum FROM Interview WHERE status = 'accepted'";
+			ResultSet result = state.executeQuery(query);
+			result.next();
+			
+		
+			
+			return result.getDouble("sum");
+		}
 
 }
