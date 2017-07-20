@@ -16,18 +16,19 @@ public class WriteDate implements JavaDelegate {
 	public static String body;
 	public static String instanceID = "ins1";
 
-	public void execute(DelegateExecution arg0) throws Exception {
-		// TODO zugriff auf Process variable
+	public void execute(DelegateExecution execution) throws Exception {
 		// Initialize the startdate of the interview
 		Calendar startdate = new GregorianCalendar();
-//		startdate = 
+		startdate = (Calendar) execution.getVariable("startdate");
 		Calendar enddate = new GregorianCalendar();
-//		enddate = 
+		enddate = (Calendar) execution.getVariable("enddate");
 
+		String participant = (String) execution.getVariable("name");
+		
 		// Set subject and body of interview
 		// TODO: Name des Applicants bzw Applicant ID
-		subject = "Interview with Applicant";
-		body = "Hello \n this meeting is a job interview for the applicant...";
+		subject = "Interview with Applicant: " + participant;
+		body = "Hello \n this meeting is a job interview for the applicant: " + participant+ ".";
 
 		ExchangeService service = OutlookAccess.getOutlookAccess("HR_representive@outlook.de", "HRrepresentive");
 

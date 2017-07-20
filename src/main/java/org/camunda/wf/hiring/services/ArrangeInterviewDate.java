@@ -43,7 +43,7 @@ public class ArrangeInterviewDate implements JavaDelegate {
 	 * org.camunda.bpm.engine.delegate.JavaDelegate#execute(org.camunda.bpm.
 	 * engine.delegate.DelegateExecution)
 	 */
-	public void execute(DelegateExecution arg0) throws Exception {
+	public void execute(DelegateExecution execution) throws Exception {
 
 		Calendar startdate = ArrangementDateGenerator.setStartdate();
 		Calendar enddate = ArrangementDateGenerator.setStartdate();
@@ -53,7 +53,9 @@ public class ArrangeInterviewDate implements JavaDelegate {
 		// TODO: Name des Applicants bzw Applicant ID
 		subject = "Interview with Applicant";
 		body = "Hello \n this meeting is a job interview for the applicant...";
-		instanceID = "int2";
+		
+		
+		instanceID = (String) execution.getVariable("instanceID");
 
 		participant2 = "hr_employee@outlook.de";
 		initiator = "hr_representive@outlook.de";
@@ -62,7 +64,7 @@ public class ArrangeInterviewDate implements JavaDelegate {
 		service2 = OutlookAccess.getOutlookAccess(participant1, "Vicepresident");
 		service3 = OutlookAccess.getOutlookAccess(participant2, "HRrepresentive");
 
-		checkDate(startdate, enddate);
+		checkDate(startdate, enddate, execution);
 
 	}
 
@@ -88,7 +90,7 @@ public class ArrangeInterviewDate implements JavaDelegate {
 		service2 = OutlookAccess.getOutlookAccess(participant1, "Vicepresident");
 		service3 = OutlookAccess.getOutlookAccess(participant2, "HRrepresentive");
 
-		checkDate(startdate, enddate);
+		checkDate(startdate, enddate, execution);
 	}*/
 
 	/*
@@ -96,7 +98,7 @@ public class ArrangeInterviewDate implements JavaDelegate {
 	 * participants are free and writes an arrangement onto their outlook
 	 * calendars
 	 */
-	public static void checkDate(Calendar startdate, Calendar enddate) {
+	public static void checkDate(Calendar startdate, Calendar enddate, DelegateExecution execution) {
 
 		try {
 			// After checking if start and enddate not on the weekend...
@@ -122,7 +124,8 @@ public class ArrangeInterviewDate implements JavaDelegate {
 
 					// Save the date temporarily on the localhost database
 					DBAccess.addInterviewToDB(instanceID, startdate, "Invitation sent");
-
+					execution.setVariable("startdate", startdate);
+					execution.setVariable("enddate", enddate);
 				} else {
 					// Set no date after 17:00
 					if (enddate.get(Calendar.HOUR_OF_DAY) < 17) {
@@ -131,7 +134,7 @@ public class ArrangeInterviewDate implements JavaDelegate {
 						// newStartDate.set(Calendar.MINUTE, 0);
 						Calendar newEndDate = ArrangementDateGenerator.addHour(enddate);
 
-						checkDate(newStartDate, newEndDate);
+						checkDate(newStartDate, newEndDate, execution);
 					} else {
 						// If no date is available look at the next day
 						System.out.println("next day...");
@@ -140,7 +143,7 @@ public class ArrangeInterviewDate implements JavaDelegate {
 						Calendar newEndDate = ArrangementDateGenerator.nextDay(enddate);
 						enddate = ArrangementDateGenerator.addHour(enddate);
 
-						checkDate(newStartDate, newEndDate);
+						checkDate(newStartDate, newEndDate, execution);
 					}
 				}
 
