@@ -62,7 +62,7 @@ public class CVReceiverServlet extends HttpServlet  {
 			
 			ObjectValue typedCV = Variables.objectValue(cv).serializationDataFormat("application/json").create();
 
-			runtimeService.setVariable(processInstance.getId(), "jobInquiry", typedCV);
+			runtimeService.setVariable(processInstance.getId(), "cv", typedCV);
 			response.getWriter().append(objectMapper.writeValueAsString(cv));
 		}
 		
