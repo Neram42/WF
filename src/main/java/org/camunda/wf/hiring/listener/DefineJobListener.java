@@ -14,7 +14,7 @@ public class DefineJobListener implements TaskListener{
 	//TODO write information into Database
 	@Override
 	public void notify(DelegateTask delegateTask){
-		String test = (String) delegateTask.getVariable("department");
+		String test = delegateTask.getProcessInstanceId();
 
 //		try {
 //			DBAccess.insertIntoJobOffer(test);

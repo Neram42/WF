@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="1.8.2">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="1.8.1">
   <bpmn:collaboration id="Collaboration_1vz725x">
     <bpmn:participant id="company_lane" name="Company" processRef="hiring_process" />
     <bpmn:participant id="weplacm" name="WEPLACM" />
     <bpmn:participant id="aplicant" name="Applicant" />
     <bpmn:messageFlow id="MessageFlow_02uqzwr" sourceRef="provde_job_information" targetRef="weplacm" />
-    <bpmn:messageFlow id="MessageFlow_0zo09hf" sourceRef="weplacm" targetRef="request_received" />
-    <bpmn:messageFlow id="MessageFlow_0yvzkwy" sourceRef="weplacm" targetRef="approval_received" />
+    <bpmn:messageFlow id="MessageFlow_0zo09hf" sourceRef="weplacm" targetRef="RequestReceiver" />
+    <bpmn:messageFlow id="MessageFlow_0yvzkwy" sourceRef="weplacm" targetRef="ApprovalReceiver" />
     <bpmn:messageFlow id="MessageFlow_0rsahfk" sourceRef="end_invitation" targetRef="aplicant" />
     <bpmn:messageFlow id="MessageFlow_0jkp1a5" sourceRef="refuse_applicant" targetRef="aplicant" />
     <bpmn:messageFlow id="MessageFlow_09ltb4t" sourceRef="reqeust_new_cvs" targetRef="weplacm" />
     <bpmn:messageFlow id="MessageFlow_0uyvnzl" sourceRef="accept_applicant" targetRef="aplicant" />
     <bpmn:messageFlow id="MessageFlow_1hv9uny" sourceRef="send_payment" targetRef="weplacm" />
-    <bpmn:messageFlow id="MessageFlow_00tct90" sourceRef="weplacm" targetRef="notification_received" />
-    <bpmn:messageFlow id="MessageFlow_0agna24" sourceRef="weplacm" targetRef="CV_received" />
+    <bpmn:messageFlow id="MessageFlow_00tct90" sourceRef="weplacm" targetRef="NotificationReceiver" />
+    <bpmn:messageFlow id="MessageFlow_0agna24" sourceRef="weplacm" targetRef="CVReceiver" />
     <bpmn:messageFlow id="MessageFlow_0m3h8fp" sourceRef="aplicant" targetRef="Task_037cygr" />
     <bpmn:messageFlow id="MessageFlow_056fss2" sourceRef="aplicant" targetRef="Task_1ovsog6" />
   </bpmn:collaboration>
@@ -24,11 +24,11 @@
         <bpmn:flowNodeRef>define_job_information</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>provde_job_information</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>ExclusiveGateway_0mux9gs</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>approval_received</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>request_received</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ApprovalReceiver</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>RequestReceiver</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>ExclusiveGateway_015peq8</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>notification_received</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>CV_received</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>NotificationReceiver</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>CVReceiver</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Select_final_candidates</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>arrange_interview_date</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_13c96le</bpmn:flowNodeRef>
@@ -57,11 +57,11 @@
             <bpmn:flowNodeRef>define_job_information</bpmn:flowNodeRef>
             <bpmn:flowNodeRef>provde_job_information</bpmn:flowNodeRef>
             <bpmn:flowNodeRef>ExclusiveGateway_0mux9gs</bpmn:flowNodeRef>
-            <bpmn:flowNodeRef>approval_received</bpmn:flowNodeRef>
-            <bpmn:flowNodeRef>request_received</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>ApprovalReceiver</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>RequestReceiver</bpmn:flowNodeRef>
             <bpmn:flowNodeRef>ExclusiveGateway_015peq8</bpmn:flowNodeRef>
-            <bpmn:flowNodeRef>notification_received</bpmn:flowNodeRef>
-            <bpmn:flowNodeRef>CV_received</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>NotificationReceiver</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>CVReceiver</bpmn:flowNodeRef>
             <bpmn:flowNodeRef>Select_final_candidates</bpmn:flowNodeRef>
             <bpmn:flowNodeRef>accept_applicant</bpmn:flowNodeRef>
             <bpmn:flowNodeRef>refuse_applicant</bpmn:flowNodeRef>
@@ -121,40 +121,40 @@
       <bpmn:outgoing>SequenceFlow_1cqf0g5</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_03mszzp</bpmn:outgoing>
     </bpmn:eventBasedGateway>
-    <bpmn:sequenceFlow id="SequenceFlow_1cqf0g5" name="&#10;" sourceRef="ExclusiveGateway_0mux9gs" targetRef="approval_received" />
-    <bpmn:sequenceFlow id="SequenceFlow_03mszzp" sourceRef="ExclusiveGateway_0mux9gs" targetRef="request_received" />
-    <bpmn:intermediateCatchEvent id="approval_received" name="Approval for job opening received">
+    <bpmn:sequenceFlow id="SequenceFlow_1cqf0g5" name="&#10;" sourceRef="ExclusiveGateway_0mux9gs" targetRef="ApprovalReceiver" />
+    <bpmn:sequenceFlow id="SequenceFlow_03mszzp" sourceRef="ExclusiveGateway_0mux9gs" targetRef="RequestReceiver" />
+    <bpmn:intermediateCatchEvent id="ApprovalReceiver" name="Approval for job opening received">
       <bpmn:incoming>SequenceFlow_1cqf0g5</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1aw5al3</bpmn:outgoing>
       <bpmn:messageEventDefinition messageRef="Message_1ctw5cw" />
     </bpmn:intermediateCatchEvent>
-    <bpmn:intermediateCatchEvent id="request_received" name="Request for &#10;additional job &#10;information received">
+    <bpmn:intermediateCatchEvent id="RequestReceiver" name="Request for &#10;additional job &#10;information received">
       <bpmn:incoming>SequenceFlow_03mszzp</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_02f1qr2</bpmn:outgoing>
       <bpmn:messageEventDefinition messageRef="Message_09d4h9x" />
     </bpmn:intermediateCatchEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_02f1qr2" sourceRef="request_received" targetRef="ExclusiveGateway_1m8z1f4" />
-    <bpmn:sequenceFlow id="SequenceFlow_1aw5al3" sourceRef="approval_received" targetRef="ExclusiveGateway_10npsiz" />
+    <bpmn:sequenceFlow id="SequenceFlow_02f1qr2" sourceRef="RequestReceiver" targetRef="ExclusiveGateway_1m8z1f4" />
+    <bpmn:sequenceFlow id="SequenceFlow_1aw5al3" sourceRef="ApprovalReceiver" targetRef="ExclusiveGateway_10npsiz" />
     <bpmn:sequenceFlow id="SequenceFlow_13eahit" sourceRef="ExclusiveGateway_10npsiz" targetRef="ExclusiveGateway_015peq8" />
     <bpmn:eventBasedGateway id="ExclusiveGateway_015peq8">
       <bpmn:incoming>SequenceFlow_13eahit</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0ex5za0</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_0x1esqv</bpmn:outgoing>
     </bpmn:eventBasedGateway>
-    <bpmn:sequenceFlow id="SequenceFlow_0ex5za0" sourceRef="ExclusiveGateway_015peq8" targetRef="notification_received" />
-    <bpmn:sequenceFlow id="SequenceFlow_0geg5yy" sourceRef="notification_received" targetRef="ExclusiveGateway_1m8z1f4" />
-    <bpmn:intermediateCatchEvent id="notification_received" name="Notification of no&#10;matching CVs&#10;received">
+    <bpmn:sequenceFlow id="SequenceFlow_0ex5za0" sourceRef="ExclusiveGateway_015peq8" targetRef="NotificationReceiver" />
+    <bpmn:sequenceFlow id="SequenceFlow_0geg5yy" sourceRef="NotificationReceiver" targetRef="ExclusiveGateway_1m8z1f4" />
+    <bpmn:intermediateCatchEvent id="NotificationReceiver" name="Notification of no&#10;matching CVs&#10;received">
       <bpmn:incoming>SequenceFlow_0ex5za0</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0geg5yy</bpmn:outgoing>
       <bpmn:messageEventDefinition messageRef="Message_1btlhpu" />
     </bpmn:intermediateCatchEvent>
-    <bpmn:intermediateCatchEvent id="CV_received" name="CV received">
+    <bpmn:intermediateCatchEvent id="CVReceiver" name="CV received">
       <bpmn:incoming>SequenceFlow_0x1esqv</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0kdfrtd</bpmn:outgoing>
       <bpmn:messageEventDefinition messageRef="Message_0xc5r3o" />
     </bpmn:intermediateCatchEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_0x1esqv" sourceRef="ExclusiveGateway_015peq8" targetRef="CV_received" />
-    <bpmn:sequenceFlow id="SequenceFlow_0kdfrtd" sourceRef="CV_received" targetRef="Select_final_candidates" />
+    <bpmn:sequenceFlow id="SequenceFlow_0x1esqv" sourceRef="ExclusiveGateway_015peq8" targetRef="CVReceiver" />
+    <bpmn:sequenceFlow id="SequenceFlow_0kdfrtd" sourceRef="CVReceiver" targetRef="Select_final_candidates" />
     <bpmn:userTask id="Select_final_candidates" name="Select final candidates" camunda:formKey="embedded:app:forms/Select_final_candidates.html" camunda:candidateGroups="recruiting">
       <bpmn:extensionElements>
         <camunda:inputOutput>
@@ -344,10 +344,10 @@
     <bpmn:textAnnotation id="TextAnnotation_0te1l4c">    <bpmn:text>HR manager</bpmn:text>
 </bpmn:textAnnotation>
   </bpmn:process>
-  <bpmn:message id="Message_09d4h9x" name="weplacm_request" />
-  <bpmn:message id="Message_1ctw5cw" name="weplacm_approval" />
-  <bpmn:message id="Message_1btlhpu" name="notification" />
-  <bpmn:message id="Message_0xc5r3o" name="cv_received" />
+  <bpmn:message id="Message_09d4h9x" name="RequestReceiver" />
+  <bpmn:message id="Message_1ctw5cw" name="ApprovalReceiver" />
+  <bpmn:message id="Message_1btlhpu" name="NotificationReceiver" />
+  <bpmn:message id="Message_0xc5r3o" name="CVReceiver" />
   <bpmn:message id="Message_1ciztfx" name="response_received" />
   <bpmn:message id="Message_0g07swc" name="refusal_received" />
   <bpmn:message id="Message_04r652i" name="signed_contract_received" />
@@ -431,7 +431,7 @@
           <dc:Bounds x="838.722" y="284" width="0" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="IntermediateCatchEvent_05n5ivr_di" bpmnElement="approval_received">
+      <bpmndi:BPMNShape id="IntermediateCatchEvent_05n5ivr_di" bpmnElement="ApprovalReceiver">
         <dc:Bounds x="994.722" y="237" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="971" y="275" width="83" height="24" />
@@ -444,7 +444,7 @@
           <dc:Bounds x="1074" y="196" width="0" height="24" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="IntermediateCatchEvent_0jyduq2_di" bpmnElement="request_received">
+      <bpmndi:BPMNShape id="IntermediateCatchEvent_0jyduq2_di" bpmnElement="RequestReceiver">
         <dc:Bounds x="879.722" y="319.435" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="929" y="313" width="62" height="48" />
@@ -501,7 +501,7 @@
           <dc:Bounds x="1202.722" y="284" width="0" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="IntermediateCatchEvent_1ecj65h_di" bpmnElement="notification_received">
+      <bpmndi:BPMNShape id="IntermediateCatchEvent_1ecj65h_di" bpmnElement="NotificationReceiver">
         <dc:Bounds x="1185" y="105.435" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1221" y="105" width="80" height="36" />
@@ -522,7 +522,7 @@
           <dc:Bounds x="745" y="102" width="90" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="IntermediateCatchEvent_13sfz9q_di" bpmnElement="CV_received">
+      <bpmndi:BPMNShape id="IntermediateCatchEvent_13sfz9q_di" bpmnElement="CVReceiver">
         <dc:Bounds x="1315.722" y="237" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1304" y="277" width="60" height="12" />

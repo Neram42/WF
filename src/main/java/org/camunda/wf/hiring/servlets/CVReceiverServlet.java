@@ -56,7 +56,7 @@ public class CVReceiverServlet extends HttpServlet  {
 			return; //break
 		} else {
 			
-			processInstance = runtimeService.startProcessInstanceByMessage("CV"/*, map*/);
+			processInstance = runtimeService.startProcessInstanceByMessage("CVReceiver"/*, map*/);
 			
 			ObjectValue typedJobInquiry = Variables.objectValue(cv).serializationDataFormat("application/json").create();
 
@@ -65,21 +65,21 @@ public class CVReceiverServlet extends HttpServlet  {
 		}
 		
 		// build HTML output
-		/*PrintWriter out = response.getWriter();
+		PrintWriter out = response.getWriter();
 		response.setContentType("text/html");
 		out.println("<html><body>");
 		String id = request.getParameter("id");
 		if (null == id) {
-			out.println("<h2>Error</h2><p>Parameter id missing!</p>" + cvString); } 
+			out.println("<h2>Error</h2><p>Parameter id missing!</p>" + id); } 
 		else {
 			try {
 			runtimeService.createMessageCorrelation("continueMessage") .processInstanceId(id).correlate();
-			out.println("<h1>CVs delivered to process</h1><p>ID: " + id + "</p>" + cvString); }
+			out.println("<h1>CVs delivered to process</h1><p>ID: " + id + "</p>"); }
 			catch (MismatchingMessageCorrelationException e) {
 			out.println("<h2>Error</h2><p>No correlating process instance.</p><p>" + id + "</p>");
 			} }
 			out.println("</body></html>");
-	    out.close();*/
+	    out.close();
 	  }
 }
 

@@ -38,7 +38,7 @@ public class ApprovalReceivedServlet extends HttpServlet  {
 			out.println("<h2>Error</h2><p>Parameter id missing!</p>"); } 
 					else {
 			try {
-			runtimeService.createMessageCorrelation("continueMessage") .processInstanceId(id).correlate();
+			runtimeService.createMessageCorrelation("ApprovalReceiver").processInstanceId(id).correlate();
 			out.println("<h1>Message delivered to process</h1><p>ID: " + id + "</p>"); }
 			catch (MismatchingMessageCorrelationException e) {
 			out.println("<h2>Error</h2><p>No correlating process instance.</p><p>" + id + "</p>");
