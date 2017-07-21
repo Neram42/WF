@@ -37,14 +37,10 @@ public class CVReceiverServlet extends HttpServlet  {
 	 @SuppressWarnings("deprecation")
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	  {
-		ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
-		RuntimeService runtimeService = processEngine.getRuntimeService();
-		ProcessInstance processInstance;
-		
 		
 		request.setCharacterEncoding("UTF-8");
 		String contentType = request.getContentType();
-		response.setContentType("text/html"); // content type of our response, html for testing
+		response.setContentType("application/json"); // content type of our response, html for testing
 		if (!"application/json".equals(contentType)) { // check if we really get a JSON
 			response.getWriter().append("{\"error\":\"invalidRequest\",\"status\":\"wrong content type\"}");
 		}
@@ -59,19 +55,19 @@ public class CVReceiverServlet extends HttpServlet  {
 			response.getWriter().append("{\"error\":\"invalidRequest\", \"status\":\"CV Object not created\"}");
 			return; //break
 		} else {
-			response.getWriter().append("Versuche, Daten in den Scope zu schreiben ..." + cv.getId() + " "+ cv.getName());
-			
+			//response.getWriter().append("Versuche, Daten in den Scope zu schreiben ..." + cv.getId() + " "+ cv.getName());
+			ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
+			RuntimeService runtimeService = processEngine.getRuntimeService();
 			//Load data into scope
-			processInstance = runtimeService.startProcessInstanceByMessage("CV"/*, map*/);
-			
+		
 			ObjectValue typedCV = Variables.objectValue(cv).serializationDataFormat("application/json").create();
 
-			runtimeService.setVariable(processInstance.getId(), "cv", typedCV);
+			runtimeService.setVariable(cv.getId(), "cv", typedCV);
 			response.getWriter().append(objectMapper.writeValueAsString(cv));
 		}
 		
 		// build HTML output
-		PrintWriter out = response.getWriter();
+		/*PrintWriter out = response.getWriter();
 		response.setContentType("text/html");
 		out.println("<html><body>");
 		String id = cv.getId();
@@ -85,7 +81,7 @@ public class CVReceiverServlet extends HttpServlet  {
 			out.println("<h2>Error</h2><p>No correlating process instance.</p><p>" + id + "</p>");
 			} }
 			out.println("</body></html>");
-	    out.close();
+	    out.close();*/
 	  }
 }
 
