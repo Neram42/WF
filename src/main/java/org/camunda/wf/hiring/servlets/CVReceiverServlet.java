@@ -41,23 +41,27 @@ public class CVReceiverServlet extends HttpServlet  {
 		RuntimeService runtimeService = processEngine.getRuntimeService();
 		ProcessInstance processInstance;
 		
+		
 		request.setCharacterEncoding("UTF-8");
 		String contentType = request.getContentType();
-		response.setContentType("text/html");
-		if (!"application/json".equals(contentType)) {
+		response.setContentType("text/html"); // content type of our response, html for testing
+		if (!"application/json".equals(contentType)) { // check if we really get a JSON
 			response.getWriter().append("{\"error\":\"invalidRequest\",\"status\":\"wrong content type\"}");
 		}
 		
+		// Instantiate the Jackson JSON processor
 		ObjectMapper objectMapper = new ObjectMapper();
-		BufferedReader reader = request.getReader();
+		BufferedReader reader = request.getReader(); //contains JSON data, RAW
 
-		CV cv = objectMapper.readValue(reader, CV.class);
+		CV cv = objectMapper.readValue(reader, CV.class); // transform JSON data into a CV Jave object
 		
 		if (null == cv) {
-			response.getWriter().append("{\"error\":\"invalidRequest\", \"status\":\"GSON not correctly created\"}");
+			response.getWriter().append("{\"error\":\"invalidRequest\", \"status\":\"CV Object not created\"}");
 			return; //break
 		} else {
 			response.getWriter().append("Versuche, Daten in den Scope zu schreiben ..." + cv.getId() + " "+ cv.getName());
+			
+			//Load data into scope
 			processInstance = runtimeService.startProcessInstanceByMessage("CV"/*, map*/);
 			
 			ObjectValue typedCV = Variables.objectValue(cv).serializationDataFormat("application/json").create();
