@@ -6,29 +6,21 @@
 </head>
 <body>
 
-<form role="form" name="form">
+
+<form role="form" name="form" class="form-horizontal">
   <script cam-script type="text/form-script">
 
-
-
 				camForm.on('form-loaded', function() {
-
-  					camForm.variableManager.fetchVariable('CV');
-
+  					camForm.variableManager.fetchVariable('cv');
 				});
-
-				
 
 				camForm.on('variables-fetched', function() {
-
-  					$scope.jobInquiry = camForm.variableManager.variableValue('CV');
-
+  					$scope.cv = camForm.variableManager.variableValue('cv');
 				});
 
-
-
 			</script>
-		    
+		
+
 			<table class="table">
             <thead>
             <tr>
@@ -38,14 +30,15 @@
 				</tr>
 			</thead>
 			<tbody>
-			<tr ng-repeat="cv in CV">
-				<td>{{cv.firstname}}</td>
-				<td>{{cv.name}}</td>
-				<td><input type="button" value="Accept"></td>
+			<tr>
+				<td>{{CV.firstname}}</td>
+				<td>{{CV.name}}</td>
+				<td><input type="button" value="Accept"> <input type="button" value="Decline"></td>
 			</tr>
 			</tbody>
 			</table>
-</div>
+			
+			
 </form>
 </body>
 </html>
