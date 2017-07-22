@@ -86,7 +86,8 @@ public class ApprovalReceivedServlet extends HttpServlet {
 				out.println("<h2>Error</h2><p>No correlating process instance.</p><p>" + id + "</p>");
 			}
 		}
-
+	    response.setContentType("text/html");
+	    out.close();
 	}
 }
 

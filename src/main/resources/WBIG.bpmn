@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="1.8.1">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="1.8.2">
   <bpmn:collaboration id="Collaboration_1vz725x">
     <bpmn:participant id="company_lane" name="Company" processRef="hiring_process" />
     <bpmn:participant id="weplacm" name="WEPLACM" />
@@ -227,7 +227,7 @@
       <bpmn:incoming>SequenceFlow_0ybmvnh</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1lakb97</bpmn:outgoing>
     </bpmn:sendTask>
-    <bpmn:sendTask id="reqeust_new_cvs" name="Request new CVs" camunda:class="org.camunda.bpm.MySendTaskDelegate">
+    <bpmn:sendTask id="reqeust_new_cvs" name="Request new CVs" camunda:class="org.camunda.wf.hiring.sendMessages.RequestNewCVs">
       <bpmn:incoming>SequenceFlow_1cmpffj</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_16rvn2e</bpmn:outgoing>
     </bpmn:sendTask>
@@ -290,7 +290,7 @@
       <bpmn:incoming>SequenceFlow_0s266oc</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_132o6cm</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:sendTask id="end_invitation" name="Send out invitation for interview" camunda:class="org.camunda.bpm.MySendTaskDelegate">
+    <bpmn:sendTask id="end_invitation" name="Send out invitation for interview" camunda:class="org.camunda.wf.hiring.sendMessages.SendInvitation">
       <bpmn:incoming>SequenceFlow_132o6cm</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1s5u7nr</bpmn:outgoing>
     </bpmn:sendTask>
