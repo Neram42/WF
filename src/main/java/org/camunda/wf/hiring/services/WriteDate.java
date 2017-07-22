@@ -24,7 +24,7 @@ public class WriteDate implements JavaDelegate {
 		enddate = (Calendar) execution.getVariable("enddate");
 		
 		//Initialize instanceID from process variables
-		instanceID = (String) execution.getVariable("instanceID");
+		instanceID = (String) execution.getVariable("id");
 
 		String participant = (String) execution.getVariable("name");
 		

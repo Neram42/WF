@@ -9,10 +9,10 @@ import microsoft.exchange.webservices.data.core.service.item.Appointment;
 public class DeleteArrangement implements JavaDelegate {
 
 	public void execute(DelegateExecution execution) throws Exception {
-		// TODO Delete Arrangement from Outlook Calendar using interviewDate field from Database
+		// TODO Delete Arrangement from Outlook Calendar using the appointment that is saved in a process variable
 		Appointment app = (Appointment) execution.getVariable("appointment");
 		
-		OutlookAccess.deleteArrangement(app);
+		OutlookAccess.deleteAppointment(app);
 	}
 
 }

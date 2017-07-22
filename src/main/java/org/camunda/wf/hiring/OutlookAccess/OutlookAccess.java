@@ -93,7 +93,7 @@ public class OutlookAccess {
 
 	}
 	
-	public static void deleteArrangement(Appointment app) throws ServiceLocalException, Exception{
+	public static void deleteAppointment(Appointment app) throws ServiceLocalException, Exception{
 		 app.delete(DeleteMode.HardDelete);
 	}
 	

@@ -50,7 +50,7 @@ public class ArrangeInterviewDate implements JavaDelegate {
 		enddate = ArrangementDateGenerator.nextHour(enddate);
 		
 		//get the instanceID from camunda
-		instanceID = (String) execution.getVariable("instanceID");
+		instanceID = (String) execution.getVariable("id");
 
 		participant2 = "hr_employee@outlook.de";
 		initiator = "hr_representive@outlook.de";
