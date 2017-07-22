@@ -1,8 +1,8 @@
-package org.camunda.wf.hiring.servlets;
+package org.camunda.wf.hiring.entities;
 
 import java.util.Calendar;
 
-class CV {
+public class CV {
 	private String id;
 	private String name;
 	private String address;

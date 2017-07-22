@@ -24,6 +24,8 @@ import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.variable.Variables;
 import org.camunda.bpm.engine.variable.value.ObjectValue;
 import org.camunda.bpm.model.bpmn.builder.IntermediateCatchEventBuilder;
+import org.camunda.wf.hiring.entities.CV;
+
 import com.fasterxml.jackson.core.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -49,7 +51,7 @@ public class CVReceiverServlet extends HttpServlet  {
 		ObjectMapper objectMapper = new ObjectMapper();
 		BufferedReader reader = request.getReader(); //contains JSON data, RAW
 
-		CV cv = objectMapper.readValue(reader, CV.class); // transform JSON data into a CV Jave object
+		CV cv = objectMapper.readValue(reader, CV.class); // transform JSON data into a CV Java object
 		
 		if (null == cv) {
 			response.getWriter().append("{\"error\":\"invalidRequest\", \"status\":\"CV Object not created\"}");
