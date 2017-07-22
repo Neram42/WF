@@ -23,9 +23,8 @@ public class RequestNewCVs implements JavaDelegate {
 		String currentDate = (String) execution.getVariable("deadline");
 
 		try {
-			SimpleDateFormat formatter = new SimpleDateFormat("YYYY-MM-DD");
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 			Date date = formatter.parse(currentDate);
-			System.out.println(date);
 
 			Date newDate;
 
@@ -35,6 +34,7 @@ public class RequestNewCVs implements JavaDelegate {
 			newDate = cal.getTime(); // New date
 
 			String newDuration = formatter.format(newDate);
+			execution.setVariable("deadline", newDuration);
 
 			String JSON = "{ \"processId\": \"" + externalID + "\",";
 			JSON = JSON + "\"newDuration\": \"" + newDuration + "\"}";

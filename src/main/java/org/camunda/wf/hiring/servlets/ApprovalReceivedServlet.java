@@ -13,6 +13,8 @@ import org.camunda.bpm.engine.MismatchingMessageCorrelationException;
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.ProcessEngines;
 import org.camunda.bpm.engine.RuntimeService;
+import org.camunda.wf.hiring.entities.Approval;
+
 import com.google.gson.Gson;
 
 @WebServlet(name = "ApprovalReceiver", description = "Servlet for receiving the approval of job info. Calling the servlet leads to continuation", urlPatterns = "/ApprovalReceiver")
@@ -59,10 +61,10 @@ public class ApprovalReceivedServlet extends HttpServlet {
 
 		BufferedReader reader = request.getReader(); // contains JSON data, RAW
 
-		String id;
+		Approval approval;
 
 		try {
-			id = new Gson().fromJson(reader, String.class);
+			approval = new Gson().fromJson(reader, Approval.class);
 		} catch (Exception e) {
 			response.getWriter().append("{\"error\":\"invalidRequest\", \"status\":\"failed to creade GSON\"}");
 			return; // break
@@ -71,19 +73,26 @@ public class ApprovalReceivedServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		response.setContentType("text/html");
 		out.println("<html><body>");
+		
+//		ObjectValue objectApproval = Variables.objectValue(approval)
+//				.serializationDataFormat("application/json")
+//				.create();
 
-		if (null == id) {
+		String peerProcessInstanceId = approval.getOwnId();
+
+		if (null == peerProcessInstanceId) {
 			response.getWriter().append("{\"error\":\"invalidRequest\", \"status\":\"Response Object not created\"}");
 			return; // break
 		} else {
 			ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
 			RuntimeService runtimeService = processEngine.getRuntimeService();
 			try {
-
-				runtimeService.createMessageCorrelation("ApprovalReceiver").processInstanceId(id).correlate();
-				out.println("<h1>Message delivered to process</h1><p>ID: " + id + "</p>");
+				String externalId = approval.getExternalId();
+				runtimeService.setVariable(approval.getOwnId(), "externalId", externalId);
+				runtimeService.createMessageCorrelation("ApprovalReceiver").processInstanceId(peerProcessInstanceId).correlate();
+				out.println("<h1>Message delivered to process</h1><p>ID: " + peerProcessInstanceId + "</p>");
 			} catch (MismatchingMessageCorrelationException e) {
-				out.println("<h2>Error</h2><p>No correlating process instance.</p><p>" + id + "</p>");
+				out.println("<h2>Error</h2><p>No correlating process instance.</p><p>" + peerProcessInstanceId + "</p>");
 			}
 		}
 	    response.setContentType("text/html");
