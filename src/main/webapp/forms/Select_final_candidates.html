@@ -31,10 +31,9 @@
 			</thead>
 			<tbody>
 			
-			<tr>
-			
-				<td>{{cvs.name}}</td>
-				<td>{{cvs.rating}}</td>
+			<tr ng-repeat="cv in cvs">
+				<td>{{cv.name}}</td>
+				<td>{{cv.rating}}</td>
 				<td><input type="button" value="Accept"> <input type="button" value="Decline"></td>
 			</tr>
 	
