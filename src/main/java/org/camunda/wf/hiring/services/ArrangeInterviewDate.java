@@ -62,7 +62,6 @@ public class ArrangeInterviewDate implements JavaDelegate {
 		
 		String date = sdf.format(startdate.getTime());
 		execution.setVariable("showStartdate", date);
-
 	}
 	
 
@@ -76,7 +75,14 @@ public class ArrangeInterviewDate implements JavaDelegate {
 		try {
 			// After checking if start and enddate are not on the weekend:
 			// Lookup in each calendar to check if the date is already occupied
-			if (enddate.get(Calendar.DAY_OF_WEEK) != 1 || enddate.get(Calendar.DAY_OF_WEEK) != 7) {
+			if (enddate.get(Calendar.DAY_OF_WEEK) == 1 ^ enddate.get(Calendar.DAY_OF_WEEK) == 7) 
+				{
+					System.out.println("Skip Weekends.");
+					startdate.add(Calendar.DAY_OF_MONTH, 1);
+					enddate.add(Calendar.DAY_OF_MONTH, 1);
+					checkDate(startdate, enddate);
+					
+				}else{
 
 				CalendarFolder cf1 = CalendarFolder.bind(service1, WellKnownFolderName.Calendar);
 				FindItemsResults<Appointment> findResults1 = cf1
@@ -126,12 +132,6 @@ public class ArrangeInterviewDate implements JavaDelegate {
 
 			}
 
-			else {
-				System.out.println("Skip Weekends.");
-				startdate.add(Calendar.DAY_OF_MONTH, 1);
-				enddate.add(Calendar.DAY_OF_MONTH, 1);
-				checkDate(startdate, enddate);
-			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
