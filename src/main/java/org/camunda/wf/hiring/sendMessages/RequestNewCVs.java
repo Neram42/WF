@@ -11,6 +11,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
+import org.camunda.wf.hiring.services.Constants;
 
 /*
  * This class calls for new CVs at WEPLACM
@@ -50,7 +51,7 @@ public class RequestNewCVs implements JavaDelegate {
 			// create Json
 			String JSON = "{ \"processInstanceId\": \"" + externalID + "\",";
 			JSON = JSON + "\"deadline\": \"" + newDuration + "\"}";
-			String postURL = "http://25.59.214.213:8080/processJobInquiry/receive-prolongation";
+			String postURL = Constants.REMOTE_URL + "/processJobInquiry/receive-prolongation";
 
 			try {
 				// create post request

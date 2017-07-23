@@ -6,6 +6,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
+import org.camunda.wf.hiring.services.Constants;
 
 public class ProvideJobInformation implements JavaDelegate {
 
@@ -48,7 +49,7 @@ public class ProvideJobInformation implements JavaDelegate {
 
 		System.out.println(JSON);
 		
-		String postURL = "http://25.59.214.213:8080/processJobInquiry/job-inquiry";
+		String postURL = Constants.REMOTE_URL + "/processJobInquiry/job-inquiry";
 		
 		try {
 			// create post request

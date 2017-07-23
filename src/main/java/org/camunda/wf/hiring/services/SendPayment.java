@@ -13,10 +13,10 @@ import org.camunda.bpm.engine.delegate.JavaDelegate;
  * @see org.camunda.bpm.engine.delegate.JavaDelegate#execute(org.camunda.bpm.engine.delegate.DelegateExecution)
  */
 public class SendPayment implements JavaDelegate{
-
+	 
 	public void execute(DelegateExecution execution) throws Exception {
 
-		  String url = "http://www.tewes.it/post_test.php";
+		  String url = Constants.REMOTE_URL + "/post_test.php";
 		  URL obj = new URL(url);
 		  HttpURLConnection conection = (HttpURLConnection) obj.openConnection();
 		 
