@@ -56,7 +56,7 @@ $scope.deleteElement = function(index){
 
 $scope.acceptElement = function(index, singlecv){
     $scope.cv = singlecv;
-	
+	$scope.disableAccept = true;
 	$scope.cvs.splice(index,1);
 }
 
@@ -75,7 +75,7 @@ $scope.acceptElement = function(index, singlecv){
 			<tr ng-repeat="singlecv in cvs">
 				<td>{{singlecv.name}}</td>
 				<td>{{singlecv.rating}}</td>
-				<td><input type="button" value="Accept" ng-click="acceptElement($index, singlecv)"> <input type="button" value="Decline" ng-click="deleteElement($index)"></td>
+				<td><input type="button" value="Accept" ng-click="acceptElement($index, singlecv)" ng-disabled="disableAccept"> <input type="button" value="Decline" ng-click="deleteElement($index)"></td>
 			</tr>
 			</tbody>
 			</table>
