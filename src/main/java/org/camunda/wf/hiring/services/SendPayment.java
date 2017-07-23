@@ -16,7 +16,7 @@ public class SendPayment implements JavaDelegate{
 
 	public void execute(DelegateExecution execution) throws Exception {
 
-		  String url = "http://www.tewes.it/post_test.php";
+		  String url = "http://25.59.214.213:8080/processJobInquiry/receive-payment";
 		  URL obj = new URL(url);
 		  HttpURLConnection conection = (HttpURLConnection) obj.openConnection();
 		 
@@ -25,7 +25,7 @@ public class SendPayment implements JavaDelegate{
 		  //con.setRequestProperty("User-Agent", USER_AGENT);
 		  conection.setRequestProperty("Content-Type","application/json");
 		 
-		  double salary = (double) execution.getVariable("salary");
+		  Double salary = (Double) execution.getVariable("salary");
 		  String jsonData = "'{'salary':"+String.valueOf(salary)+"}'";
 		  
 		  // Send post request

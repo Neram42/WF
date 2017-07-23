@@ -11,6 +11,10 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
+import org.camunda.wf.hiring.entities.Request;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 /*
  * This class calls for new CVs at WEPLACM
@@ -18,7 +22,7 @@ import org.camunda.bpm.engine.delegate.JavaDelegate;
 public class RequestNewCVs implements JavaDelegate {
 
 	/**
-	 * this 
+	 * this
 	 */
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
@@ -38,18 +42,21 @@ public class RequestNewCVs implements JavaDelegate {
 
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(date);
-			
+
 			// change month to two month later
-			cal.add(Calendar.MONTH, 2); 
+			cal.add(Calendar.MONTH, 2);
 			newDate = cal.getTime(); // New date
 
 			// re-convert back to String
 			String newDuration = formatter.format(newDate);
 			execution.setVariable("deadline", newDuration);
 
-			// create Json
-			String JSON = "{ \"processInstanceId\": \"" + externalID + "\",";
-			JSON = JSON + "\"deadline\": \"" + newDuration + "\"}";
+			// Request request;
+			//
+
+			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+
+			String JSON = gson.toJson(new Request(externalID, newDate));
 			String postURL = "http://25.59.214.213:8080/processJobInquiry/receive-prolongation";
 
 			try {
@@ -59,7 +66,7 @@ public class RequestNewCVs implements JavaDelegate {
 
 				post.setHeader("content-type", "application/json");
 				post.setEntity(postString);
-				
+
 				// send post request
 				client.execute(post);
 
