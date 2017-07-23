@@ -16,7 +16,6 @@ import microsoft.exchange.webservices.data.search.CalendarView;
 import microsoft.exchange.webservices.data.search.FindItemsResults;
 
 
-
 public class ArrangeInterviewDate implements JavaDelegate {
 
 	// Variable to show the time in the right format if needed

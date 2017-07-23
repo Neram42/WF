@@ -10,7 +10,6 @@ public class SendInvitation implements JavaDelegate {
 
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
-		// TODO TESTEN SOBALD INFOs zur EMAIL Usw. stehen
 
 		ExchangeService service = OutlookAccess.getOutlookAccess("HR_representive@outlook.de", "HRrepresentive");
 		String recipient = (String) execution.getVariable("cv.email");

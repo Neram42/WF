@@ -15,10 +15,6 @@ import microsoft.exchange.webservices.data.search.FindItemsResults;
  */
 public class ArrangementDateGenerator {
 	
-	public ArrangementDateGenerator(){
-		
-	}
-	
 	public static Calendar setStartdate(){
 		Calendar date = new GregorianCalendar();
 		// add five days to today
