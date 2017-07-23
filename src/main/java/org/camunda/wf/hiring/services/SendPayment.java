@@ -8,13 +8,14 @@ import java.net.URL;
 import java.sql.SQLException;
 
 import org.camunda.bpm.engine.delegate.DelegateExecution;
+import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.camunda.wf.hiring.dbAccess.DBAccess;
 
 /*
  * This method is called during process execution and will execute the logic
  * @see org.camunda.bpm.engine.delegate.JavaDelegate#execute(org.camunda.bpm.engine.delegate.DelegateExecution)
  */
-public class SendPayment {
+public class SendPayment implements JavaDelegate{
 
 	public void execute(DelegateExecution execution) throws Exception {
 
@@ -28,7 +29,7 @@ public class SendPayment {
 		  conection.setRequestProperty("Content-Type","application/json");
 		 
 		  double salary = (double) execution.getVariable("salary");
-		  String jsonData = "'{'salary':"+String.valueOf(salary)+"'}'";
+		  String jsonData = "'{'salary':"+String.valueOf(salary)+"}'";
 		  
 		  // Send post request
 		  conection.setDoOutput(true);
