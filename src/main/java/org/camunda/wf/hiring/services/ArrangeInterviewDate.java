@@ -130,6 +130,7 @@ public class ArrangeInterviewDate implements JavaDelegate {
 				System.out.println("Skip Weekends.");
 				startdate.add(Calendar.DAY_OF_MONTH, 1);
 				enddate.add(Calendar.DAY_OF_MONTH, 1);
+				checkDate(startdate, enddate);
 			}
 
 		} catch (Exception e) {
