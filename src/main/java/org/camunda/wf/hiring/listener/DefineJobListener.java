@@ -17,12 +17,12 @@ public class DefineJobListener implements TaskListener{
 
 		//			DBAccess.insertIntoJobOffer(test);
 //		try {
-			DBAccess.insertIntoJobOffer("test", "title", "ocation", "requ", "Profile", "tasklist", "deadline");
+//			DBAccess.insertIntoJobOffer("test", "title", "ocation", "requ", "Profile", "tasklist", "deadline");
 //		} catch (SQLException e) {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
-		System.out.println("Input database...");
+//		System.out.println("Input database...");
 	}
 
 
