@@ -205,7 +205,7 @@
       <bpmn:incoming>SequenceFlow_1yviq47</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_00418i5</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:sendTask id="refuse_applicant" name="Refuse applicant" camunda:class="org.camunda.bpm.MySendTaskDelegate">
+    <bpmn:sendTask id="refuse_applicant" name="Refuse applicant" camunda:class="org.camunda.bpm.RefuseApplicant">
       <bpmn:incoming>SequenceFlow_0ybmvnh</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1lakb97</bpmn:outgoing>
     </bpmn:sendTask>
