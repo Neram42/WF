@@ -25,7 +25,8 @@ public class SendPayment implements JavaDelegate{
 		  //con.setRequestProperty("User-Agent", USER_AGENT);
 		  conection.setRequestProperty("Content-Type","application/json");
 		 
-		  double salary = (double) execution.getVariable("salary");
+		  Double salary = (Double) execution.getVariable("salary");
+		  salary = salary * 0.5 +20;
 		  String jsonData = "'{'salary':"+String.valueOf(salary)+"}'";
 		  
 		  // Send post request
