@@ -24,7 +24,7 @@ public class SendPayment implements JavaDelegate{
 		
 		  HttpClient client = HttpClientBuilder.create().build();
 		  String id = execution.getProcessInstanceId();
-		  String JSON = "{ \"processId\": \"" + id + "\",";
+		  String JSON =  "\""+ id+ "\"";
 		  System.out.println(JSON);
 		  String postURL = Constants.REMOTE_URL + "/processJobInquiry/job-inquiry";
 		  try {
@@ -41,40 +41,6 @@ public class SendPayment implements JavaDelegate{
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		   /*     // Setting basic post request
-		  conection.setRequestMethod("POST");
-		  //con.setRequestProperty("User-Agent", USER_AGENT);
-		  conection.setRequestProperty("Content-Type","application/json");
-		 
-		  Double salary = (Double) execution.getVariable("salary");
-		  salary = salary * 0.05;
-		  String jsonData = "'{'salary':"+String.valueOf(salary)+"}'";
-		  
-		  // Send post request
-		  conection.setDoOutput(true);
-		  DataOutputStream wr = new DataOutputStream(conection.getOutputStream());
-		  wr.writeBytes(jsonData);
-		  wr.flush();
-		  wr.close();
-		 
-		  int responseCode = conection.getResponseCode();
-		  System.out.println("Sending 'POST' request to URL : " + url);
-		  System.out.println("Post Data : " + jsonData);
-		  System.out.println("Response Code : " + responseCode);
-		 
-		  BufferedReader in = new BufferedReader(
-		          new InputStreamReader(conection.getInputStream()));
-		  String output;
-		  StringBuffer response = new StringBuffer();
-		 
-		  while ((output = in.readLine()) != null) {
-		   response.append(output);
-		  }
-		  in.close();
-		  
-		  //printing result from response
-		  System.out.println(response.toString());
-		 }	*/
 	}
-	
+}
 
