@@ -99,6 +99,25 @@ public class DBAccess {
 		connection.close();
 	}
 	
+	public static void insertIntoJobOffer(String id, String title, String location, String requirements, String candidateProfile, String tasklist, String deadline){
+		getConnection();
+
+		Statement state;
+		try {
+			state = connection.createStatement();
+			String query = "INSERT INTO joboffer (JOID, title, location, requirements, candidateProfile, tasklist, deadline) VALUES (" + id + ", " + title + ", " + location + ", " + requirements + ", " + candidateProfile + ", " + tasklist + ", " + deadline + ");";
+			System.out.println(query);
+			state.executeUpdate(query);
+			
+			state.close();
+			connection.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+	
 	/*
 	 *  This method is used to get the sum of all salaries of accepted applicants
 	 */

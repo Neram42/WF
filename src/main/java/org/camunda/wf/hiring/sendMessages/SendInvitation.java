@@ -2,9 +2,6 @@ package org.camunda.wf.hiring.sendMessages;
 
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
-import org.camunda.wf.hiring.OutlookAccess.OutlookAccess;
-
-import microsoft.exchange.webservices.data.core.ExchangeService;
 
 public class SendInvitation implements JavaDelegate{
 

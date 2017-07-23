@@ -6,7 +6,6 @@ import java.util.GregorianCalendar;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.camunda.wf.hiring.OutlookAccess.OutlookAccess;
-import org.camunda.wf.hiring.entities.OutlookAppointment;
 
 import microsoft.exchange.webservices.data.core.ExchangeService;
 import microsoft.exchange.webservices.data.core.service.item.Appointment;
@@ -32,10 +31,9 @@ public class WriteDate implements JavaDelegate {
 
 		ExchangeService service = OutlookAccess.getOutlookAccess("HR_representive@outlook.de", "HRrepresentive");
 
-		//Write Arrangement into Outlook
+		//Write Arrangement into Outlook and save the appointment in a variable
 		Appointment app = OutlookAccess.writeCalendar(startdate, enddate, subject, body, service, "HR_employee@outlook.de",
-				"Vice_president@outlook.de");
-		
+				"Vice_president@outlook.de");	
 		
 		//Save Appointment in the Outlook Appointment class to save it in camunda
 //		OutlookAppointment oapp = new OutlookAppointment(app);
