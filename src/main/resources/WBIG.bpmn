@@ -201,7 +201,7 @@
       <bpmn:outgoing>SequenceFlow_0ybmvnh</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_1yviq47</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:userTask id="accept_applicant" name="Send contract" camunda:formKey="embedded:app:forms/Candidate_Acceptance.html" camunda:candidateGroups="recruiting">
+    <bpmn:userTask id="accept_applicant" name="Send contract" camunda:formKey="embedded:app:forms/Send_Contract.html" camunda:candidateGroups="recruiting">
       <bpmn:incoming>SequenceFlow_1yviq47</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_00418i5</bpmn:outgoing>
     </bpmn:userTask>
