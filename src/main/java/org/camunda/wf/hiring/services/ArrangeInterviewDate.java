@@ -21,7 +21,7 @@ import microsoft.exchange.webservices.data.search.FindItemsResults;
 public class ArrangeInterviewDate implements JavaDelegate {
 
 	// Variable to show the time in the right format if needed
-	public static SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMM dd HH");
+	public static SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMM dd HH:mm:ss");
 
 	// Initialization of the access to the three accounts and save their
 	// email addresses for further use
@@ -32,9 +32,6 @@ public class ArrangeInterviewDate implements JavaDelegate {
 	public static ExchangeService service2;
 	public static ExchangeService service3;
 	
-	//Saving the instanceID of the applicant
-	public static String instanceID;
-
 	/*
 	 * This method is called during process execution and will execute the logic
 	 * 
@@ -48,20 +45,23 @@ public class ArrangeInterviewDate implements JavaDelegate {
 		Calendar startdate = ArrangementDateGenerator.setStartdate();
 		Calendar enddate = ArrangementDateGenerator.setStartdate();
 		enddate = ArrangementDateGenerator.nextHour(enddate);
-		
-		//get the instanceID from camunda
-		instanceID = (String) execution.getVariable("id");
 
-		participant2 = "hr_employee@outlook.de";
 		initiator = "hr_representive@outlook.de";
 		participant1 = "vice_president@outlook.de";
+		participant2 = "hr_employee@outlook.de";
 		//Get Access to the three required Outlook accounts
-		service1 = OutlookAccess.getOutlookAccess(initiator, "HRemployee");
+		service1 = OutlookAccess.getOutlookAccess(initiator, "HRrepresentive");
 		service2 = OutlookAccess.getOutlookAccess(participant1, "Vicepresident");
-		service3 = OutlookAccess.getOutlookAccess(participant2, "HRrepresentive");
+		service3 = OutlookAccess.getOutlookAccess(participant2, "HRemployee");
 		
 		//Check when the participants are free for the interview
-		checkDate(startdate, enddate, execution);
+		checkDate(startdate, enddate);
+
+		execution.setVariable("startdate", startdate);
+		execution.setVariable("enddate", enddate);
+		
+		String date = sdf.format(startdate.getTime());
+		execution.setVariable("showStartdate", date);
 
 	}
 	
@@ -71,7 +71,7 @@ public class ArrangeInterviewDate implements JavaDelegate {
 	 * participants are free and writes an arrangement onto their outlook
 	 * calendars
 	 */
-	public static void checkDate(Calendar startdate, Calendar enddate, DelegateExecution execution) {
+	public static void checkDate(Calendar startdate, Calendar enddate) {
 
 		try {
 			// After checking if start and enddate are not on the weekend:
@@ -98,11 +98,9 @@ public class ArrangeInterviewDate implements JavaDelegate {
 
 					//TODO: DECIDE IF DATABASE ACCESS IS REQUIRED
 					// Save the date temporarily on the localhost database
-					DBAccess.addInterviewToDB(instanceID, startdate, "Invitation sent");
+					//DBAccess.addInterviewToDB(instanceID, startdate, "Invitation sent");
 					
 					//Setting of Process variables in camunda to remember Interview time
-					execution.setVariable("startdate", startdate);
-					execution.setVariable("enddate", enddate);
 				} else {
 					// Set no date after 17:00
 					if (enddate.get(Calendar.HOUR_OF_DAY) < 17) {
@@ -112,7 +110,7 @@ public class ArrangeInterviewDate implements JavaDelegate {
 						// newStartDate.set(Calendar.MINUTE, 0);
 						Calendar newEndDate = ArrangementDateGenerator.addHour(enddate);
 
-						checkDate(newStartDate, newEndDate, execution);
+						checkDate(newStartDate, newEndDate);
 					} else {
 						// If no date is available look at the next day
 						System.out.println("next day...");
@@ -122,7 +120,7 @@ public class ArrangeInterviewDate implements JavaDelegate {
 						Calendar newEndDate = ArrangementDateGenerator.nextDay(enddate);
 						enddate = ArrangementDateGenerator.addHour(enddate);
 
-						checkDate(newStartDate, newEndDate, execution);
+						checkDate(newStartDate, newEndDate);
 					}
 				}
 

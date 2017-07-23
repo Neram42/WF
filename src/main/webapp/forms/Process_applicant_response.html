@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<h1 style="color: rgb(179,0,0)">WBIG</h1>
+<h2>Process response for contract</h2>
+</head>
+<body>
+
+<form role="form" name="form">
+  <script cam-script type="text/form-script">
+
+
+
+				camForm.on('form-loaded', function() {
+
+  					camForm.variableManager.fetchVariable('cv');
+
+				});
+
+				
+
+				camForm.on('variables-fetched', function() {
+
+  					$scope.jobInquiry = camForm.variableManager.variableValue('cv');
+
+				});
+
+
+
+			</script>
+			<b>Name: {{cv.name}}</b>
+			
+  <br>
+  
+  
+       <div class="control-group">
+                <p>What is the applicants answer?</p>
+                <br>
+                <select cam-variable-name="response" cam-variable-type="String">
+                    <option value="accept">Applicant accepted the invitation for the job interview.</option>
+                    <option value="refuse">Applicant refused the invitation for the job interview.</option>
+                    <option value="change">Applicant wants a change request of the job interview date.</option>
+                </select>
+</form>
+</body>
+</html>

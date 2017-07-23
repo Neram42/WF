@@ -6,6 +6,7 @@ import java.util.GregorianCalendar;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.camunda.wf.hiring.OutlookAccess.OutlookAccess;
+import org.camunda.wf.hiring.entities.OutlookAppointment;
 
 import microsoft.exchange.webservices.data.core.ExchangeService;
 import microsoft.exchange.webservices.data.core.service.item.Appointment;
@@ -14,7 +15,6 @@ public class WriteDate implements JavaDelegate {
 
 	public static String subject;
 	public static String body;
-	public static String instanceID;
 
 	public void execute(DelegateExecution execution) throws Exception {
 		// Initialize the startdate and the enddate of the interview to set the arrangement from process variables
@@ -22,9 +22,6 @@ public class WriteDate implements JavaDelegate {
 		startdate = (Calendar) execution.getVariable("startdate");
 		Calendar enddate = new GregorianCalendar();
 		enddate = (Calendar) execution.getVariable("enddate");
-		
-		//Initialize instanceID from process variables
-		instanceID = (String) execution.getVariable("id");
 
 		String participant = (String) execution.getVariable("name");
 		
@@ -39,7 +36,11 @@ public class WriteDate implements JavaDelegate {
 		Appointment app = OutlookAccess.writeCalendar(startdate, enddate, subject, body, service, "HR_employee@outlook.de",
 				"Vice_president@outlook.de");
 		
-		execution.setVariable("appointment", app);
+		
+		//Save Appointment in the Outlook Appointment class to save it in camunda
+//		OutlookAppointment oapp = new OutlookAppointment(app);
+//		
+//		execution.setVariable("appointment", oapp);
 	}
 
 }

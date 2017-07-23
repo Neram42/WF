@@ -35,6 +35,7 @@ public class DBAccess {
 
 	/*
 	 *  This method is used to insert the interview into the Database
+	 *  TODO: DELETE IF NO DATABASE ACCESS IS USED
 	 */
 	public static void addInterviewToDB(String instanceID, Calendar startdate, String status) throws SQLException {
 

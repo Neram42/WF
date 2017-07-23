@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="1.8.2">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="1.8.1">
   <bpmn:collaboration id="Collaboration_1vz725x">
     <bpmn:participant id="company_lane" name="Company" processRef="hiring_process" />
     <bpmn:participant id="weplacm" name="WEPLACM" />
@@ -157,9 +157,6 @@
     <bpmn:sequenceFlow id="SequenceFlow_0kdfrtd" sourceRef="CVReceiver" targetRef="Select_final_candidates" />
     <bpmn:userTask id="Select_final_candidates" name="Select final candidates" camunda:formKey="embedded:app:forms/Select_final_candidates.html" camunda:candidateGroups="recruiting">
       <bpmn:extensionElements>
-        <camunda:inputOutput>
-          <camunda:outputParameter name="instanceID" />
-        </camunda:inputOutput>
         <camunda:taskListener class="org.camunda.wf.hiring.listener.SelectCandidatesListener" event="create" />
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_0kdfrtd</bpmn:incoming>
@@ -169,7 +166,7 @@
     <bpmn:sequenceFlow id="SequenceFlow_1oriags" sourceRef="ExclusiveGateway_1i1206z" targetRef="arrange_interview_date" />
     <bpmn:sequenceFlow id="SequenceFlow_1nf4u9w" sourceRef="arrange_interview_date" targetRef="Task_13c96le" />
     <bpmn:sequenceFlow id="SequenceFlow_11y9l8w" name="change request" sourceRef="ExclusiveGateway_1l74bid" targetRef="Task_0n7xkhx">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${dateChangeRequest==true}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression"><![CDATA[${response == "change"}]]></bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_16rvn2e" sourceRef="reqeust_new_cvs" targetRef="ExclusiveGateway_10npsiz" />
     <bpmn:sequenceFlow id="SequenceFlow_0tp2uk6" sourceRef="start_event" targetRef="ExclusiveGateway_1m8z1f4" />
@@ -185,11 +182,6 @@
       <bpmn:outgoing>SequenceFlow_13eahit</bpmn:outgoing>
     </bpmn:inclusiveGateway>
     <bpmn:serviceTask id="arrange_interview_date" name="Search interview date" camunda:class="org.camunda.wf.hiring.services.ArrangeInterviewDate">
-      <bpmn:extensionElements>
-        <camunda:inputOutput>
-          <camunda:inputParameter name="instanceID" />
-        </camunda:inputOutput>
-      </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_1oriags</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1nf4u9w</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -205,10 +197,10 @@
       <bpmn:outgoing>SequenceFlow_1oriags</bpmn:outgoing>
     </bpmn:inclusiveGateway>
     <bpmn:sequenceFlow id="SequenceFlow_0s266oc" name="Confirmed" sourceRef="ExclusiveGateway_0z9313r" targetRef="Task_19ix27y">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${confirmDate == true}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${confirmDate}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_0qd1sac" name="Denied" sourceRef="ExclusiveGateway_0z9313r" targetRef="ExclusiveGateway_1i1206z">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${denyDate == true}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${!confirmDate}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_132o6cm" sourceRef="Task_19ix27y" targetRef="end_invitation" />
     <bpmn:exclusiveGateway id="ExclusiveGateway_0zfych9" name="Refuse or &#10;accept applicant">
@@ -259,10 +251,10 @@
     </bpmn:inclusiveGateway>
     <bpmn:sequenceFlow id="SequenceFlow_1s5u7nr" sourceRef="end_invitation" targetRef="Task_037cygr" />
     <bpmn:sequenceFlow id="SequenceFlow_1xbdpk7" name="accept" sourceRef="ExclusiveGateway_1l74bid" targetRef="interview">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${dateAccept==true}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression"><![CDATA[${response=="accept"}]]></bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_0o90e2n" name="refusal" sourceRef="ExclusiveGateway_1l74bid" targetRef="ExclusiveGateway_11kge56">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${dateAccept==false}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression"><![CDATA[${response=="refuse"}]]></bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_1sb6irl" sourceRef="interview" targetRef="ExclusiveGateway_0zfych9" />
     <bpmn:sequenceFlow id="SequenceFlow_0ybmvnh" name="refuse" sourceRef="ExclusiveGateway_0zfych9" targetRef="refuse_applicant">
@@ -281,12 +273,6 @@
       <bpmn:outgoing>SequenceFlow_0qd1sac</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:serviceTask id="Task_19ix27y" name="Write Date into Outlook calendar" camunda:class="org.camunda.wf.hiring.services.WriteDate">
-      <bpmn:extensionElements>
-        <camunda:inputOutput>
-          <camunda:inputParameter name="instanceID" />
-          <camunda:outputParameter name="varstartdate" />
-        </camunda:inputOutput>
-      </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_0s266oc</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_132o6cm</bpmn:outgoing>
     </bpmn:serviceTask>

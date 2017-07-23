@@ -7,33 +7,45 @@
 <body>
 
 <form role="form" name="form">
+  <script cam-script type="text/form-script">
+
+				camForm.on('form-loaded', function() {
+  					camForm.variableManager.fetchVariable('cv');
+				});
+
+				camForm.on('variables-fetched', function() {
+  					$scope.cv = camForm.variableManager.variableValue('cv');
+				});
+
+			</script>
+
+
   <div class="form-group">
     Name:<br>
-    <input cam-variable-name="name"
+    <input cam-variable-name="cv.name"
            cam-variable-type="String"
            class="form-control" />
-  </div>
-  <br>
-  <div class="form-group">
-    Candidate Number:<br>
-    <input cam-variable-name="CandidateNumber"
-           cam-variable-type="Double"
-           class="form-control" />
-  </div>
+
   <br>
   <div class="form-group">
    Date:<br>
-    <input cam-variable-name="date"
-           cam-variable-type="integer"
+    <input cam-variable-name="showStartdate"
+           cam-variable-type="String"
            class="form-control" />
-  </div>
-  <br>
-  <div align="left">
-  <button name="confirmDate" type="button" onclick="alert('Thank you for confirmation')">Confirm</button>
-  </div>
-  <div align="left">
-  <button name="denyDate" type="button" onclick="alert('Please select another date')">Deny</button>
-  </div>
+           
+           
+     <div class="control-group">
+                <p>Is the provided information sufficient for a job opening?</p>
+                
+                <select cam-variable-name="confirmDate" cam-variable-type="Boolean">
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+                
+</div>      
+
+  
+  
 </form>
 </body>
 </html>
