@@ -14,15 +14,20 @@ import org.camunda.bpm.engine.delegate.JavaDelegate;
 
 public class RequestNewCVs implements JavaDelegate {
 
+	/**
+	 * this 
+	 */
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
 		// build HTTP post with all variables as parameters
 		HttpClient client = HttpClientBuilder.create().build();
 
+		// Load parameters from cockpit
 		String externalID = (String) execution.getVariable("externalID");
 		String currentDate = (String) execution.getVariable("deadline");
 
 		try {
+			// convert deadline into date format
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 			Date date = formatter.parse(currentDate);
 
@@ -30,22 +35,29 @@ public class RequestNewCVs implements JavaDelegate {
 
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(date);
+			
+			// change month to two month later
 			cal.add(Calendar.MONTH, 2); 
 			newDate = cal.getTime(); // New date
 
+			// re-convert back to String
 			String newDuration = formatter.format(newDate);
 			execution.setVariable("deadline", newDuration);
 
-			String JSON = "{ \"processId\": \"" + externalID + "\",";
-			JSON = JSON + "\"newDuration\": \"" + newDuration + "\"}";
-			String postURL = "http://";
+			// create Json
+			String JSON = "{ \"processInstanceId\": \"" + externalID + "\",";
+			JSON = JSON + "\"deadline\": \"" + newDuration + "\"}";
+			String postURL = "http://25.59.214.213:8080/processJobInquiry/receive-prolongation";
 
 			try {
+				// create post request
 				HttpPost post = new HttpPost(postURL);
 				StringEntity postString = new StringEntity(JSON);
 
 				post.setHeader("content-type", "application/json");
 				post.setEntity(postString);
+				
+				// send post request
 				client.execute(post);
 
 			} catch (Exception e) {

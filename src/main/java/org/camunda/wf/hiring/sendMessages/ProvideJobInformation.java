@@ -9,14 +9,11 @@ import org.camunda.bpm.engine.delegate.JavaDelegate;
 
 public class ProvideJobInformation implements JavaDelegate {
 
-//	public void execute(DelegateExecution execution) {
-//		// TODO
-//	}
-
 	public void execute(DelegateExecution execution) throws Exception {
 		// build HTTP post with all variables as parameters
 		HttpClient client = HttpClientBuilder.create().build();
 		
+		//Load parameters from camunda cockpit
 		String id = execution.getProcessInstanceId();
 		String location = (String) execution.getVariable("location");
 		String title = (String) execution.getVariable("title");
@@ -25,53 +22,43 @@ public class ProvideJobInformation implements JavaDelegate {
 		String deadline = (String) execution.getVariable("deadline");
 		String tasklist = (String) execution.getVariable("tasklist");
 		
-		
+		// Generate String arrays 
 		String candidateProfileJSON = "[";
 		for (String candidateProfiletemp : candidateProfile.split(",")){
 			candidateProfileJSON = candidateProfileJSON + "\"" + candidateProfiletemp + "\",";
 		}
 		candidateProfileJSON = candidateProfileJSON.substring(0, candidateProfileJSON.length() -1);
 		candidateProfileJSON = candidateProfileJSON + "]";
-		
-		System.out.println(candidateProfileJSON);
-		
+
 		String tasklistJSON = "[";
 		for (String tasklisttemp : tasklist.split(",")){
 			tasklistJSON = tasklistJSON + "\"" + tasklisttemp + "\",";
 		}
 		tasklistJSON = tasklistJSON.substring(0, tasklistJSON.length() -1);
 		tasklistJSON = tasklistJSON + "]";
-		
-		System.out.println(tasklistJSON);
-		
-		String requirementsJSON = "[";
-		for (String requirementstemp : requirements.split(",")){
-			requirementsJSON = requirementsJSON + "\"" + requirementstemp + "\",";
-		}
-		requirementsJSON = requirementsJSON.substring(0, requirementsJSON.length() -1);
-		requirementsJSON = requirementsJSON + "]";
-		
-		System.out.println(requirementsJSON);
-		
+			
+		// create final Json
 		String JSON = "{ \"processId\": \"" + id + "\",";
-		JSON = JSON + "\"tile\": \"" + title + "\",";
+		JSON = JSON + "\"title\": \"" + title + "\",";
 		JSON = JSON + "\"location\": \"" + location + "\",";
-		JSON = JSON + "\"requiredGraduation\": \"" + requirementsJSON + "\",";
-		JSON = JSON + "\"candidateProfile\": \"" + candidateProfileJSON + "\",";
-		JSON = JSON + "\"tasklist\": \"" + tasklistJSON + "\",";
+		JSON = JSON + "\"requiredGraduation\": \"" + requirements + "\",";
+		JSON = JSON + "\"candidateProfile\": " + candidateProfileJSON + ",";
+		JSON = JSON + "\"taskList\": " + tasklistJSON + ",";
 		JSON = JSON + "\"deadline\": \"" + deadline + "\"}";
 
 		System.out.println(JSON);
 		
-
-		String postURL = "http://";
+		String postURL = "http://25.59.214.213:8080/processJobInquiry/job-inquiry";
 		
 		try {
+			// create post request
 			HttpPost post = new HttpPost(postURL);
 			StringEntity postString = new StringEntity(JSON);
 			
 			post.setHeader("content-type", "application/json");
 			post.setEntity(postString);
+			
+			// execute post
 			client.execute(post);
 			
 		} catch (Exception e) {

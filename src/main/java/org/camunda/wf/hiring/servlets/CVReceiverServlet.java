@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -37,7 +39,8 @@ public class CVReceiverServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		response.setContentType("application/json"); // content type of our
 														// response, html for
-														// testing
+		
+													// testing
 		if (!"application/json".equals(contentType)) { // check if we really get
 														// a JSON
 			response.getWriter().append("{\"error\":\"invalidRequest\",\"status\":\"wrong content type\"}");
@@ -45,7 +48,9 @@ public class CVReceiverServlet extends HttpServlet {
 
 		// Instantiate the GSONs out of the received JSON
 		BufferedReader reader = request.getReader(); // contains JSON data, RAW
-
+		response.setContentType("text/html");
+		out.println("<html><body>");
+		
 		CvCollection cvCollection;
 		try {
 			cvCollection = new Gson().fromJson(reader, CvCollection.class);
@@ -66,21 +71,10 @@ public class CVReceiverServlet extends HttpServlet {
 			
 //			ArrayList<CV> cvs = cvCollection.getCvCollection();
 //			
-//			for (int i = 0; i < cvs.size(); i++) {
-//				StringBuilder sb = new StringBuilder();
-//				sb.append("cv");
-//				sb.append(i + 1);
-//				String cv = sb.toString();
-//
-//				CV cvTemp = cvs.get(i);
-//				runtimeService.setVariable(cvCollection.getProcessInstanceId(), cv, cvTemp);
-//			}
 			
 
 			runtimeService.setVariable(cvCollection.getProcessInstanceId(), "cvs", cvs);
 			// build HTML output
-			response.setContentType("text/html");
-			out.println("<html><body>");
 			
 			String id = cvCollection.getProcessInstanceId();
 			if (null == id) {

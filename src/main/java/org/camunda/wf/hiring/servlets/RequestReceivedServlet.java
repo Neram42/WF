@@ -26,31 +26,31 @@ public class RequestReceivedServlet extends HttpServlet  {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	// GET request
-	@SuppressWarnings("deprecation")
-	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
-	  {
-		ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
-		RuntimeService runtimeService = processEngine.getRuntimeService();
-		PrintWriter out = response.getWriter();
-		out.println("<html><body>");
-		
-		String id = request.getParameter("id");
-		if (null == id) {
-			out.println("<h2>Error</h2><p>Parameter id missing!</p>"); } 
-					else {
-			try {
-			runtimeService.createMessageCorrelation("continueMessage") .processInstanceId(id).correlate();
-			out.println("<h1>Message delivered to process</h1><p>ID: " + id + "</p>"); }
-			catch (MismatchingMessageCorrelationException e) {
-			out.println("<h2>Error</h2><p>No correlating process instance.</p><p>" + id + "</p>");
-			} }
-			out.println("</body></html>");
-	   
-	    response.setContentType("text/html");
-	    out.close();
-	  }
-	
+//	// GET request
+//	@SuppressWarnings("deprecation")
+//	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+//	  {
+//		ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
+//		RuntimeService runtimeService = processEngine.getRuntimeService();
+//		PrintWriter out = response.getWriter();
+//		out.println("<html><body>");
+//		
+//		String id = request.getParameter("id");
+//		if (null == id) {
+//			out.println("<h2>Error</h2><p>Parameter id missing!</p>"); } 
+//					else {
+//			try {
+//			runtimeService.createMessageCorrelation("RequestReceiver") .processInstanceId(id).correlate();
+//			out.println("<h1>Message delivered to process</h1><p>ID: " + id + "</p>"); }
+//			catch (MismatchingMessageCorrelationException e) {
+//			out.println("<h2>Error</h2><p>No correlating process instance.</p><p>" + id + "</p>");
+//			} }
+//			out.println("</body></html>");
+//	   
+//	    response.setContentType("text/html");
+//	    out.close();
+//	  }
+//	
 	
 	// POST request
 	@SuppressWarnings("deprecation")
@@ -85,7 +85,7 @@ public class RequestReceivedServlet extends HttpServlet  {
 			RuntimeService runtimeService = processEngine.getRuntimeService();
 			try {
 
-				runtimeService.createMessageCorrelation("ApprovalReceiver").processInstanceId(id).correlate();
+				runtimeService.createMessageCorrelation("RequestReceiver").processInstanceId(id).correlate();
 				out.println("<h1>Message delivered to process</h1><p>ID: " + id + "</p>");
 			} catch (MismatchingMessageCorrelationException e) {
 				out.println("<h2>Error</h2><p>No correlating process instance.</p><p>" + id + "</p>");
