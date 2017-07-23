@@ -10,6 +10,9 @@ import microsoft.exchange.webservices.data.core.service.item.Appointment;
 import microsoft.exchange.webservices.data.search.CalendarView;
 import microsoft.exchange.webservices.data.search.FindItemsResults;
 
+/*
+ * This class is for generating the start and enddate of the interview and to add hours or days
+ */
 public class ArrangementDateGenerator {
 	
 	public ArrangementDateGenerator(){
@@ -53,7 +56,9 @@ public class ArrangementDateGenerator {
 		return newDate;
 	}
 	
-	
+	/*
+	 * This method searches in the given outlook account for an appointment at the given time
+	 */
 	public static FindItemsResults<Appointment> findAppointments(ExchangeService service, Calendar startdate, Calendar enddate){
 		CalendarFolder cf1;
 		try {

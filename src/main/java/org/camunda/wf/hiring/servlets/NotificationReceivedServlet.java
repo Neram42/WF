@@ -3,6 +3,7 @@ package org.camunda.wf.hiring.servlets;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,8 +14,11 @@ import org.camunda.bpm.engine.MismatchingMessageCorrelationException;
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.ProcessEngines;
 import org.camunda.bpm.engine.RuntimeService;
-import com.google.gson.Gson;
 
+import com.google.gson.Gson;
+/*
+ * This servlet serves for Notification receiving
+ */
 @WebServlet(
         name = "NotificationReceiver",
         description = "Servlet e.g. for: Notification of no matching CVs received",

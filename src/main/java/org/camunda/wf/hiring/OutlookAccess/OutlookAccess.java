@@ -14,10 +14,6 @@ import microsoft.exchange.webservices.data.credential.WebCredentials;
 import microsoft.exchange.webservices.data.property.complex.MessageBody;
 
 public class OutlookAccess {
-	
-	public OutlookAccess(){
-		
-	}
 
 	/*
 	 * This method establishes a connection to the Exchange server. The exchange
@@ -31,8 +27,7 @@ public class OutlookAccess {
 			service.setUrl(new URI("https://outlook.com/EWS/Exchange.asmx"));
 			return service;
 		} catch (Exception e) {
-			// TODO: Exception handling
-			System.out.print("klappt nicht");
+			System.out.print("Outlook Access not available");
 			e.printStackTrace();
 			return service;
 		}
@@ -49,10 +44,9 @@ public class OutlookAccess {
 			msg.setBody(MessageBody.getMessageBodyFromText(message));
 			msg.getToRecipients().add(recipient);
 			msg.send();
-			System.out.println("Mail gesendet");
+			System.out.println("Mail sent.");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			System.out.println("Mail wurde nicht gesendet");
+			System.out.println("Mail not sent.");
 			e.printStackTrace();
 		}
 
@@ -62,8 +56,6 @@ public class OutlookAccess {
 	 * This method enables accessing the calendar of a defined user and write a
 	 * new date into it.
 	 */
-//	public static void writeCalendar(Calendar startdate, Calendar enddate, String subject, String body,
-//			ExchangeService service, String participant1, String participant2) {
 	public static Appointment writeCalendar(Calendar startdate, Calendar enddate, String subject, String body,
 			ExchangeService service, String participant1, String participant2) {
 		try {
@@ -86,13 +78,17 @@ public class OutlookAccess {
 			
 			return appointment;
 		} catch (Exception e) {
-			// TODO: Exception handling
-			System.out.println("Dates not set");
+			System.out.println("Dates could not be set in the calendars.");
 		}
 		return null;
 
 	}
 	
+	
+	//TODO:
+	/*
+	 * This method should delete an appointment
+	 */
 	public static void deleteAppointment(Appointment app) throws ServiceLocalException, Exception{
 		 app.delete(DeleteMode.HardDelete);
 	}
