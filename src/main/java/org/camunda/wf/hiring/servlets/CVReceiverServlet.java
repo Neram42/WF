@@ -3,12 +3,6 @@ package org.camunda.wf.hiring.servlets;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-<<<<<<< HEAD
-import java.util.ArrayList;
-import java.util.List;
-=======
->>>>>>> 375e8a193df4adc7a1297188673bb11c13f15e25
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
