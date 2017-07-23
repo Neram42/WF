@@ -11,11 +11,11 @@
   <script cam-script type="text/form-script">
 
 				camForm.on('form-loaded', function() {
-  					camForm.variableManager.fetchVariable('cv');
+  					camForm.variableManager.fetchVariable('cvs');
 				});
 
 				camForm.on('variables-fetched', function() {
-  					$scope.cv = camForm.variableManager.variableValue('cv');
+  					$scope.cvs = camForm.variableManager.variableValue('cvs');
 				});
 
 			</script>
@@ -24,17 +24,20 @@
 			<table class="table">
             <thead>
             <tr>
-				<th>Firstname</th>
-				<th>Lastname</th>
+				<th>Name</th>
+				<th>Rating</th>
 				<th>Decision</th>
 				</tr>
 			</thead>
 			<tbody>
+			
 			<tr>
-				<td>{{cv.firstname}}</td>
-				<td>{{cv.name}}</td>
+			
+				<td>{{cvs.name}}</td>
+				<td>{{cvs.rating}}</td>
 				<td><input type="button" value="Accept"> <input type="button" value="Decline"></td>
 			</tr>
+	
 			</tbody>
 			</table>
 			
