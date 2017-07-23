@@ -28,10 +28,15 @@
 
 
 			</script>
-			Name: {{CV.firstname}} {{CV.name}}
-  <br>
-  <button type="button">Accept</button>
-  <button type="button">Refuse</button>
+
+			
+      <div class="control-group">
+                <p> What is the answer of the applicant {{cv.name}}</p>
+                <br>
+                <select cam-variable-name="acceptance" cam-variable-type="Boolean">
+                    <option value="true">Applicant accepted the job offer.</option>
+                    <option value="false">Applicant refused the job offer.</option>
+                </select>
 </form>
 </body>
 </html>
