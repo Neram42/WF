@@ -42,7 +42,6 @@
         <bpmn:flowNodeRef>Task_19ix27y</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>end_invitation</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>ExclusiveGateway_1i1206z</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>interview</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>ExclusiveGateway_0zfych9</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>EndEvent_0xgad2x</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>ExclusiveGateway_11kge56</bpmn:flowNodeRef>
@@ -51,6 +50,7 @@
         <bpmn:flowNodeRef>Task_037cygr</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>ExclusiveGateway_1o44nzt</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_1ovsog6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>interview</bpmn:flowNodeRef>
         <bpmn:childLaneSet xsi:type="bpmn:tLaneSet">
           <bpmn:lane id="recruiting_department_lane" name="Recruiting department">
             <bpmn:flowNodeRef>start_event</bpmn:flowNodeRef>
@@ -239,10 +239,6 @@
     <bpmn:endEvent id="EndEvent_0xgad2x" name="Recruiting process end">
       <bpmn:incoming>SequenceFlow_0hye9v1</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:subProcess id="interview" name="Conduct interview">
-      <bpmn:incoming>SequenceFlow_1xbdpk7</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_1sb6irl</bpmn:outgoing>
-    </bpmn:subProcess>
     <bpmn:inclusiveGateway id="ExclusiveGateway_11kge56">
       <bpmn:incoming>SequenceFlow_0o90e2n</bpmn:incoming>
       <bpmn:incoming>SequenceFlow_1lakb97</bpmn:incoming>
@@ -313,9 +309,13 @@
     <bpmn:sequenceFlow id="SequenceFlow_14wwuoc" name="Acceptance" sourceRef="ExclusiveGateway_1o44nzt" targetRef="send_payment">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${acceptance == true}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:userTask id="Task_1ovsog6" name="Process applicant contract response" camunda:formKey="embedded:forms/Process_applicant_contract_response.html">
+    <bpmn:userTask id="Task_1ovsog6" name="Process applicant contract response" camunda:formKey="embedded:forms/Process_applicant_contract_response.html" camunda:candidateGroups="recruiting">
       <bpmn:incoming>SequenceFlow_00418i5</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_12tgti4</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="interview" name="Conduct interview" camunda:formKey="embedded:app:forms/Conduct_interview.html" camunda:candidateGroups="recruiting">
+      <bpmn:incoming>SequenceFlow_1xbdpk7</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1sb6irl</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:association id="Association_1yk6544" sourceRef="arrange_interview_date" targetRef="TextAnnotation_1pf3yn9" />
     <bpmn:textAnnotation id="TextAnnotation_1pf3yn9">    <bpmn:text>Vice president</bpmn:text>
@@ -599,12 +599,9 @@
         <di:waypoint xsi:type="dc:Point" x="2433" y="564" />
         <di:waypoint xsi:type="dc:Point" x="2525" y="564" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2433.476190476191" y="566" width="33" height="12" />
+          <dc:Bounds x="2433" y="566" width="33" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="SubProcess_0gap0nh_di" bpmnElement="interview">
-        <dc:Bounds x="2525" y="524" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_00gmly0_di" bpmnElement="TextAnnotation_00gmly0">
         <dc:Bounds x="2422" y="639" width="100" height="30" />
       </bpmndi:BPMNShape>
@@ -638,7 +635,7 @@
         <di:waypoint xsi:type="dc:Point" x="2718" y="259" />
         <di:waypoint xsi:type="dc:Point" x="2753" y="259" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2688" y="406" width="90" height="12" />
+          <dc:Bounds x="2688" y="405.5" width="90" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_0ybmvnh_di" bpmnElement="SequenceFlow_0ybmvnh">
@@ -921,6 +918,9 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="UserTask_0ys8fno_di" bpmnElement="Task_1ovsog6">
         <dc:Bounds x="3271" y="136" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_1yjf991_di" bpmnElement="interview">
+        <dc:Bounds x="2525" y="524" width="100" height="80" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
