@@ -213,7 +213,7 @@
       <bpmn:incoming>SequenceFlow_1cmpffj</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_16rvn2e</bpmn:outgoing>
     </bpmn:sendTask>
-    <bpmn:serviceTask id="send_payment" name="Send payment to WEBPLACM" camunda:class="org.camunda.wf.hiring.services.sendPayment">
+    <bpmn:serviceTask id="send_payment" name="Send payment to WEBPLACM" camunda:class="org.camunda.wf.hiring.services.SendPayment">
       <bpmn:incoming>SequenceFlow_14wwuoc</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0hye9v1</bpmn:outgoing>
       <bpmn:property id="Property_0t7br1l" name="__targetRef_placeholder" />
