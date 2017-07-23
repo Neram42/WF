@@ -22,7 +22,7 @@ public class WriteDate implements JavaDelegate {
 		Calendar enddate = new GregorianCalendar();
 		enddate = (Calendar) execution.getVariable("enddate");
 
-		String participant = (String) execution.getVariable("name");
+		String participant = (String) execution.getVariable("cv.name");
 		
 		// Set subject and body of interview
 		subject = "Interview with Applicant: " + participant;
