@@ -12,6 +12,9 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 
+/*
+ * This class calls for new CVs at WEPLACM
+ */
 public class RequestNewCVs implements JavaDelegate {
 
 	/**
@@ -65,7 +68,6 @@ public class RequestNewCVs implements JavaDelegate {
 			}
 
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

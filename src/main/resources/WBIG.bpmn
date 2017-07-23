@@ -95,9 +95,6 @@
     <bpmn:sequenceFlow id="SequenceFlow_1ba7qg5" sourceRef="ExclusiveGateway_1m8z1f4" targetRef="define_job_information" />
     <bpmn:sequenceFlow id="SequenceFlow_1ar7lxu" sourceRef="define_job_information" targetRef="provde_job_information" />
     <bpmn:userTask id="define_job_information" name="Define job information" camunda:formKey="embedded:app:forms/Job_information.html" camunda:candidateGroups="recruiting">
-      <bpmn:extensionElements>
-        <camunda:taskListener class="org.camunda.wf.hiring.listener.DefineJobListener" event="complete" />
-      </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_1ba7qg5</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1ar7lxu</bpmn:outgoing>
       <bpmn:dataOutputAssociation id="DataOutputAssociation_0dwp61n">
@@ -155,9 +152,6 @@
     <bpmn:sequenceFlow id="SequenceFlow_0x1esqv" sourceRef="ExclusiveGateway_015peq8" targetRef="CVReceiver" />
     <bpmn:sequenceFlow id="SequenceFlow_0kdfrtd" sourceRef="CVReceiver" targetRef="Select_final_candidates" />
     <bpmn:userTask id="Select_final_candidates" name="Select final candidates" camunda:formKey="embedded:app:forms/Select_final_candidates.html" camunda:candidateGroups="recruiting">
-      <bpmn:extensionElements>
-        <camunda:taskListener class="org.camunda.wf.hiring.listener.SelectCandidatesListener" event="create" />
-      </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_0kdfrtd</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_03fvimz</bpmn:outgoing>
     </bpmn:userTask>
@@ -207,7 +201,7 @@
       <bpmn:outgoing>SequenceFlow_0ybmvnh</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_1yviq47</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:userTask id="accept_applicant" name="Send contract" camunda:formKey="embedded:app:forms/Candidate_Acceptance.html" camunda:candidateGroups="recruiting">
+    <bpmn:userTask id="accept_applicant" name="Send contract" camunda:formKey="embedded:app:forms/Send_Contract.html" camunda:candidateGroups="recruiting">
       <bpmn:incoming>SequenceFlow_1yviq47</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_00418i5</bpmn:outgoing>
     </bpmn:userTask>

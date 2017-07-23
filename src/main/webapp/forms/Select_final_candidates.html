@@ -8,6 +8,7 @@
 
 
 <form role="form" name="form" class="form-horizontal">
+
   <script cam-script type="text/form-script">
 
 				camForm.on('form-loaded', function() {
@@ -18,8 +19,48 @@
   					$scope.cvs = camForm.variableManager.variableValue('cvs');
 				});
 
-			</script>
-		
+				 camForm.on('submit', function(evt) {
+    				// set value in variable manager so that it can be sent to backend
+					camForm.variableManager.variableValue('cvs', $scope.cvs);
+				
+    				//camForm.variableManager.variableManager.variableValue('cv', $scope.cv);
+					
+					var selectedCV = $scope.cv;
+					
+					//camForm.variableManager.createVariable({
+        			//	name: 'cv',
+        			//	type: 'Object',
+        			//	value: selectedCV,
+        			//	isDirty: false
+     				// });
+					var cvData = $scope.cv;
+					camForm.variableManager.createVariable({
+        				name: 'cv',
+        				type: 'Object',
+        				value: cvData,
+        				valueInfo: {
+         					 // indicate that object is serialized as json
+         					 serializationDataFormat: 'application/json',
+         					 // provide classname of java object
+          					objectTypeName: 'org.camunda.wf.hiring.entities.CV'
+        				}
+     				 });
+
+ 				 });
+
+				
+
+$scope.deleteElement = function(index){
+    $scope.cvs.splice(index,1);
+}
+
+$scope.acceptElement = function(index, singlecv){
+    $scope.cv = singlecv;
+	$scope.disableAccept = true;
+	$scope.cvs.splice(index,1);
+}
+
+			</script>		
 
 			<table class="table">
             <thead>
@@ -31,12 +72,11 @@
 			</thead>
 			<tbody>
 			
-			<tr ng-repeat="cv in cvs">
-				<td>{{cv.name}}</td>
-				<td>{{cv.rating}}</td>
-				<td><input type="button" value="Accept"> <input type="button" value="Decline"></td>
+			<tr ng-repeat="singlecv in cvs">
+				<td>{{singlecv.name}}</td>
+				<td>{{singlecv.rating}}</td>
+				<td><input type="button" class="btn btn-success" value="Accept" ng-click="acceptElement($index, singlecv)" ng-disabled="disableAccept"> <input type="button" class="btn btn-error" value="Decline" ng-click="deleteElement($index)"></td>
 			</tr>
-	
 			</tbody>
 			</table>
 			

@@ -7,7 +7,6 @@ import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.camunda.wf.hiring.OutlookAccess.ArrangementDateGenerator;
 import org.camunda.wf.hiring.OutlookAccess.OutlookAccess;
-import org.camunda.wf.hiring.dbAccess.DBAccess;
 
 import microsoft.exchange.webservices.data.core.ExchangeService;
 import microsoft.exchange.webservices.data.core.enumeration.property.WellKnownFolderName;
@@ -16,7 +15,7 @@ import microsoft.exchange.webservices.data.core.service.item.Appointment;
 import microsoft.exchange.webservices.data.search.CalendarView;
 import microsoft.exchange.webservices.data.search.FindItemsResults;
 
-//TODO: Exception handling
+
 
 public class ArrangeInterviewDate implements JavaDelegate {
 
@@ -60,9 +59,9 @@ public class ArrangeInterviewDate implements JavaDelegate {
 		execution.setVariable("startdate", startdate);
 		execution.setVariable("enddate", enddate);
 		
+		//Create a new process variable to show the startdate of the appointment in a proper way
 		String date = sdf.format(startdate.getTime());
 		execution.setVariable("showStartdate", date);
-
 	}
 	
 
@@ -76,7 +75,14 @@ public class ArrangeInterviewDate implements JavaDelegate {
 		try {
 			// After checking if start and enddate are not on the weekend:
 			// Lookup in each calendar to check if the date is already occupied
-			if (enddate.get(Calendar.DAY_OF_WEEK) != 1 || enddate.get(Calendar.DAY_OF_WEEK) != 7) {
+			if (enddate.get(Calendar.DAY_OF_WEEK) == 1 ^ enddate.get(Calendar.DAY_OF_WEEK) == 7) 
+				{
+					System.out.println("Skip Weekends.");
+					startdate.add(Calendar.DAY_OF_MONTH, 1);
+					enddate.add(Calendar.DAY_OF_MONTH, 1);
+					checkDate(startdate, enddate);
+					
+				}else{
 
 				CalendarFolder cf1 = CalendarFolder.bind(service1, WellKnownFolderName.Calendar);
 				FindItemsResults<Appointment> findResults1 = cf1
@@ -95,12 +101,8 @@ public class ArrangeInterviewDate implements JavaDelegate {
 				if (findResults1.getItems().isEmpty() && findResults2.getItems().isEmpty()
 						&& findResults3.getItems().isEmpty()) {
 					System.out.println("The participants are all free at " + startdate.getTime());
-
-					//TODO: DECIDE IF DATABASE ACCESS IS REQUIRED
-					// Save the date temporarily on the localhost database
-					//DBAccess.addInterviewToDB(instanceID, startdate, "Invitation sent");
 					
-					//Setting of Process variables in camunda to remember Interview time
+
 				} else {
 					// Set no date after 17:00
 					if (enddate.get(Calendar.HOUR_OF_DAY) < 17) {
@@ -126,12 +128,6 @@ public class ArrangeInterviewDate implements JavaDelegate {
 
 			}
 
-			else {
-				System.out.println("Skip Weekends.");
-				startdate.add(Calendar.DAY_OF_MONTH, 1);
-				enddate.add(Calendar.DAY_OF_MONTH, 1);
-				checkDate(startdate, enddate);
-			}
 
 		} catch (Exception e) {
 			e.printStackTrace();

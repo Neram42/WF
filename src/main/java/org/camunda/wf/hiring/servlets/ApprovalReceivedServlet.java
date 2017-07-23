@@ -3,6 +3,7 @@ package org.camunda.wf.hiring.servlets;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,6 +18,9 @@ import org.camunda.wf.hiring.entities.Approval;
 
 import com.google.gson.Gson;
 
+/*
+ * This servlet serves for approval receiving
+ */
 @WebServlet(name = "ApprovalReceiver", description = "Servlet for receiving the approval of job info. Calling the servlet leads to continuation", urlPatterns = "/ApprovalReceiver")
 public class ApprovalReceivedServlet extends HttpServlet {
 	/**

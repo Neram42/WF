@@ -3,8 +3,11 @@ package org.camunda.wf.hiring.servlets;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.List;
+=======
+>>>>>>> 375e8a193df4adc7a1297188673bb11c13f15e25
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,11 +21,12 @@ import org.camunda.bpm.engine.ProcessEngines;
 import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.variable.Variables;
 import org.camunda.bpm.engine.variable.value.ObjectValue;
-import org.camunda.wf.hiring.entities.CV;
 import org.camunda.wf.hiring.entities.CvCollection;
 
 import com.google.gson.Gson;
-
+/*
+ * This servlet serves for CV receiving
+ */
 @WebServlet(name = "CVReceiver", description = "Servlet for receiving the CVs", urlPatterns = "/CVReceiver")
 public class CVReceiverServlet extends HttpServlet {
 	/**

@@ -6,8 +6,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.SQLException;
+
 import org.camunda.bpm.engine.delegate.DelegateExecution;
-import org.camunda.wf.hiring.dbAccess.*;
+import org.camunda.wf.hiring.dbAccess.DBAccess;
 
 /*
  * This method is called during process execution and will execute the logic
@@ -15,40 +16,7 @@ import org.camunda.wf.hiring.dbAccess.*;
  */
 public class SendPayment {
 
-	public void execute(DelegateExecution arg0) throws Exception {
-		// TODO Auto-generated method stub
-		// Datenbank auslesen 
-		// Daten ausrechnen
-		
-	}
-	
-	/*
-	 * THIS METHOD IS ONLY FOR TEST REASONS!! TODO: DELETE CONTENT BEOFRE
-	 * SUBMISSION
-	 */
-	public static void main(String[] args) {
-		SendPayment run = new SendPayment();
-		try {
-			run.sendPaymentToProvider();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-	private double result;
-	public void sendPaymentToProvider() throws Exception {
-		
-		// Get DB connection
-		DBAccess database = new DBAccess();
-		
-		try {
-			result = database.getSumOfSalaries();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+	public void execute(DelegateExecution execution) throws Exception {
 
 		  String url = "http://www.tewes.it/post_test.php";
 		  URL obj = new URL(url);
@@ -59,8 +27,8 @@ public class SendPayment {
 		  //con.setRequestProperty("User-Agent", USER_AGENT);
 		  conection.setRequestProperty("Content-Type","application/json");
 		 
-		  
-		  String jsonData = "'{'salary':"+String.valueOf(result)+"'}'";
+		  double salary = (double) execution.getVariable("salary");
+		  String jsonData = "'{'salary':"+String.valueOf(salary)+"'}'";
 		  
 		  // Send post request
 		  conection.setDoOutput(true);
@@ -70,7 +38,7 @@ public class SendPayment {
 		  wr.close();
 		 
 		  int responseCode = conection.getResponseCode();
-		  System.out.println("nSending 'POST' request to URL : " + url);
+		  System.out.println("Sending 'POST' request to URL : " + url);
 		  System.out.println("Post Data : " + jsonData);
 		  System.out.println("Response Code : " + responseCode);
 		 
@@ -86,11 +54,7 @@ public class SendPayment {
 		  
 		  //printing result from response
 		  System.out.println(response.toString());
-		 }
-		
-		
-		
-		
-		// Get all participants which have been accepted and have a salary
-	
+		 }	
 	}
+	
+

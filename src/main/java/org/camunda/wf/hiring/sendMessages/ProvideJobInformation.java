@@ -9,6 +9,14 @@ import org.camunda.bpm.engine.delegate.JavaDelegate;
 
 public class ProvideJobInformation implements JavaDelegate {
 
+<<<<<<< HEAD
+=======
+	/*
+	 * This method provides the needed Job Information in a proper JSON format
+	 * 
+	 * @see org.camunda.bpm.engine.delegate.JavaDelegate#execute(org.camunda.bpm.engine.delegate.DelegateExecution)
+	 */
+>>>>>>> 375e8a193df4adc7a1297188673bb11c13f15e25
 	public void execute(DelegateExecution execution) throws Exception {
 		// build HTTP post with all variables as parameters
 		HttpClient client = HttpClientBuilder.create().build();

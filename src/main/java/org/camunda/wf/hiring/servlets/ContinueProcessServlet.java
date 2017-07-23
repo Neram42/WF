@@ -2,8 +2,6 @@ package org.camunda.wf.hiring.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,8 +14,9 @@ import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.ProcessEngines;
 import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
-import org.camunda.bpm.model.bpmn.builder.IntermediateCatchEventBuilder;
-
+/*
+ * This servlet serves to continue the proess
+ */
 @WebServlet(
         name = "ContinueProcess",
         description = "Calling the servlet leads to continuation. Can be used for debugging",
