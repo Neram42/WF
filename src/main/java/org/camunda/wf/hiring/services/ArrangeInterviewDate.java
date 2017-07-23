@@ -7,7 +7,6 @@ import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.camunda.wf.hiring.OutlookAccess.ArrangementDateGenerator;
 import org.camunda.wf.hiring.OutlookAccess.OutlookAccess;
-import org.camunda.wf.hiring.dbAccess.DBAccess;
 
 import microsoft.exchange.webservices.data.core.ExchangeService;
 import microsoft.exchange.webservices.data.core.enumeration.property.WellKnownFolderName;
@@ -16,7 +15,7 @@ import microsoft.exchange.webservices.data.core.service.item.Appointment;
 import microsoft.exchange.webservices.data.search.CalendarView;
 import microsoft.exchange.webservices.data.search.FindItemsResults;
 
-//TODO: Exception handling
+
 
 public class ArrangeInterviewDate implements JavaDelegate {
 
@@ -60,6 +59,7 @@ public class ArrangeInterviewDate implements JavaDelegate {
 		execution.setVariable("startdate", startdate);
 		execution.setVariable("enddate", enddate);
 		
+		//Create a new process variable to show the startdate of the appointment in a proper way
 		String date = sdf.format(startdate.getTime());
 		execution.setVariable("showStartdate", date);
 
@@ -95,12 +95,8 @@ public class ArrangeInterviewDate implements JavaDelegate {
 				if (findResults1.getItems().isEmpty() && findResults2.getItems().isEmpty()
 						&& findResults3.getItems().isEmpty()) {
 					System.out.println("The participants are all free at " + startdate.getTime());
-
-					//TODO: DECIDE IF DATABASE ACCESS IS REQUIRED
-					// Save the date temporarily on the localhost database
-					//DBAccess.addInterviewToDB(instanceID, startdate, "Invitation sent");
 					
-					//Setting of Process variables in camunda to remember Interview time
+
 				} else {
 					// Set no date after 17:00
 					if (enddate.get(Calendar.HOUR_OF_DAY) < 17) {

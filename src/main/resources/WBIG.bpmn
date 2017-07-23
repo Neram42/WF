@@ -155,9 +155,6 @@
     <bpmn:sequenceFlow id="SequenceFlow_0x1esqv" sourceRef="ExclusiveGateway_015peq8" targetRef="CVReceiver" />
     <bpmn:sequenceFlow id="SequenceFlow_0kdfrtd" sourceRef="CVReceiver" targetRef="Select_final_candidates" />
     <bpmn:userTask id="Select_final_candidates" name="Select final candidates" camunda:formKey="embedded:app:forms/Select_final_candidates.html" camunda:candidateGroups="recruiting">
-      <bpmn:extensionElements>
-        <camunda:taskListener class="org.camunda.wf.hiring.listener.SelectCandidatesListener" event="create" />
-      </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_0kdfrtd</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_03fvimz</bpmn:outgoing>
     </bpmn:userTask>
