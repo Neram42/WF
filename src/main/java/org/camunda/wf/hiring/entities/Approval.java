@@ -1,5 +1,9 @@
 package org.camunda.wf.hiring.entities;
 
+/**
+ * This class provides an Approval Object
+ *
+ */
 public class Approval {
 	private String peerProcessInstanceId;
 	private String ownProcessInstanceId;

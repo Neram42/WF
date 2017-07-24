@@ -17,7 +17,7 @@ import org.camunda.bpm.engine.RuntimeService;
 
 import com.google.gson.Gson;
 /*
- * This servlet serves for request receiving
+ * This class is a servlet which serves for request receiving
  */
 @WebServlet(
         name = "RequestReceiver",
@@ -25,51 +25,27 @@ import com.google.gson.Gson;
         urlPatterns = "/RequestReceiver"
 )
 public class RequestReceivedServlet extends HttpServlet  {
-	 /**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
-//	// GET request
-//	@SuppressWarnings("deprecation")
-//	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
-//	  {
-//		ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
-//		RuntimeService runtimeService = processEngine.getRuntimeService();
-//		PrintWriter out = response.getWriter();
-//		out.println("<html><body>");
-//		
-//		String id = request.getParameter("id");
-//		if (null == id) {
-//			out.println("<h2>Error</h2><p>Parameter id missing!</p>"); } 
-//					else {
-//			try {
-//			runtimeService.createMessageCorrelation("RequestReceiver") .processInstanceId(id).correlate();
-//			out.println("<h1>Message delivered to process</h1><p>ID: " + id + "</p>"); }
-//			catch (MismatchingMessageCorrelationException e) {
-//			out.println("<h2>Error</h2><p>No correlating process instance.</p><p>" + id + "</p>");
-//			} }
-//			out.println("</body></html>");
-//	   
-//	    response.setContentType("text/html");
-//	    out.close();
-//	  }
-//	
-	
-	// POST request
+	/**
+	 * This method waits for http post to loop back to provide job information
+	 */
 	@SuppressWarnings("deprecation")
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		String contentType = request.getContentType();
 		response.setContentType("application/json");
-		if (!"application/json".equals(contentType)) { // check if we really get a JSON
+		
+		// check if we received a Json in the body
+		if (!"application/json".equals(contentType)) { 
 			response.getWriter().append("{\"error\":\"invalidRequest\",\"status\":\"wrong content type\"}");
 		}
 
-		BufferedReader reader = request.getReader(); // contains JSON data, RAW
+		// Load data in raw form
+		BufferedReader reader = request.getReader();
 
+		// load received id 
 		String id;
-
 		try {
 			id = new Gson().fromJson(reader, String.class);
 		} catch (Exception e) {
@@ -81,10 +57,13 @@ public class RequestReceivedServlet extends HttpServlet  {
 		response.setContentType("text/html");
 		out.println("<html><body>");
 
+		// check if id is null
 		if (null == id) {
 			response.getWriter().append("{\"error\":\"invalidRequest\", \"status\":\"Response Object not created\"}");
 			return; // break
 		} else {
+			
+			// continue process
 			ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
 			RuntimeService runtimeService = processEngine.getRuntimeService();
 			try {

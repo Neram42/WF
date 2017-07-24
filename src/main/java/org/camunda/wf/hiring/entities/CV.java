@@ -2,6 +2,10 @@ package org.camunda.wf.hiring.entities;
 
 import java.util.Date;
 
+/**
+ * This class provides an CV Object
+ *
+ */
 public class CV {
 	private String name;
 	private String address;

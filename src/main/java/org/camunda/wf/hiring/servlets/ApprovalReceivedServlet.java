@@ -19,13 +19,11 @@ import org.camunda.wf.hiring.entities.Approval;
 import com.google.gson.Gson;
 
 /*
- * This servlet serves for approval receiving
+ * This class is an servlet that serves for approval receiving
  */
 @WebServlet(name = "ApprovalReceiver", description = "Servlet for receiving the approval of job info. Calling the servlet leads to continuation", urlPatterns = "/ApprovalReceiver")
 public class ApprovalReceivedServlet extends HttpServlet {
-	/**
-	* 
-	*/
+
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -38,7 +36,7 @@ public class ApprovalReceivedServlet extends HttpServlet {
 		response.setContentType("application/json");
 		
 		// check if request object has a json object in the body
-		if (!"application/json".equals(contentType)) { // check if we really get a JSON
+		if (!"application/json".equals(contentType)) { 
 			response.getWriter().append("{\"error\":\"invalidRequest\",\"status\":\"wrong content type\"}");
 		}
 

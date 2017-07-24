@@ -1,4 +1,4 @@
-package org.camunda.wf.hiring.services;
+package Utils;
 
 public final class Constants  {
 

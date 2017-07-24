@@ -6,10 +6,18 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
-import org.camunda.wf.hiring.services.Constants;
 
+import Utils.Constants;
+
+/**
+ * This class provides and sends Job Information to weplacm
+ * 
+ */
 public class ProvideJobInformation implements JavaDelegate {
 
+	/**
+	 * This method loads the job Information and sends it via a http post
+	 */
 	public void execute(DelegateExecution execution) throws Exception {
 		// build HTTP post with all variables as parameters
 		HttpClient client = HttpClientBuilder.create().build();
