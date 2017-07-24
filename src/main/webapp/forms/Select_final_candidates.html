@@ -62,24 +62,38 @@ $scope.acceptElement = function(index, singlecv){
 
 			</script>		
 
-			<table class="table">
-            <thead>
-            <tr>
-				<th>Name</th>
-				<th>Rating</th>
-				<th>Decision</th>
-				</tr>
-			</thead>
-			<tbody>
-			
-			<tr ng-repeat="singlecv in cvs">
-				<td>{{singlecv.name}}</td>
-				<td>{{singlecv.rating}}</td>
-				<td><input type="button" class="btn btn-success" value="Accept" ng-click="acceptElement($index, singlecv)" ng-disabled="disableAccept"> <input type="button" class="btn btn-error" value="Decline" ng-click="deleteElement($index)"></td>
-			</tr>
-			</tbody>
-			</table>
-			
+    <div class="panel panel-default"  ng-repeat="singlecv in cvs">
+        <div class="panel-heading"><strong>{{singlecv.name}} </strong>
+        </div>
+  <div class="panel-body">
+      <input type="button" class="btn btn-success" value="Accept" ng-click="acceptElement($index, singlecv)" ng-disabled="disableAccept"> <input type="button" class="btn btn-error" value="Decline" ng-click="deleteElement($index)">
+    <div class="control-group">
+        <label class="control-label" >Study</label>
+        <div class="controls">
+        <input value="{{singlecv.study}}" type="text" readonly="true" class="form-control" />
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" >Degree</label>
+        <div class="controls">
+        <input value="{{singlecv.degree}}" type="text" readonly="true" class="form-control" />
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" >Grade</label>
+        <div class="controls">
+        <input value="{{singlecv.grade}}" type="text" readonly="true" class="form-control" />
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" >Skills</label>
+        <div class="controls">
+        <input value="{{singlecv.skills}}" type="text" readonly="true" class="form-control" />
+        </div>
+    </div>
+    </div>
+</div>
+
 			
 </form>
 </body>
