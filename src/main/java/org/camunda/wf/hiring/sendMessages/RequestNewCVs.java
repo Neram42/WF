@@ -11,10 +11,12 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
+
 import org.camunda.wf.hiring.entities.Request;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
 
 /*
  * This class calls for new CVs at WEPLACM
@@ -30,7 +32,7 @@ public class RequestNewCVs implements JavaDelegate {
 		HttpClient client = HttpClientBuilder.create().build();
 
 		// Load parameters from cockpit
-		String externalID = (String) execution.getVariable("externalID");
+		String externalId = (String) execution.getVariable("externalId");
 		String currentDate = (String) execution.getVariable("deadline");
 
 		try {
@@ -51,13 +53,15 @@ public class RequestNewCVs implements JavaDelegate {
 			String newDuration = formatter.format(newDate);
 			execution.setVariable("deadline", newDuration);
 
+
 			// Request request;
 			//
 
 			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 
-			String JSON = gson.toJson(new Request(externalID, newDate));
+			String JSON = gson.toJson(new Request(externalId, newDate));
 			String postURL = "http://25.59.214.213:8080/processJobInquiry/receive-prolongation";
+
 
 			try {
 				// create post request
