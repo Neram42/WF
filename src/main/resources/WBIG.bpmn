@@ -97,20 +97,11 @@
     <bpmn:userTask id="define_job_information" name="Define job information" camunda:formKey="embedded:app:forms/Job_information.html" camunda:candidateGroups="recruiting">
       <bpmn:incoming>SequenceFlow_1ba7qg5</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1ar7lxu</bpmn:outgoing>
-      <bpmn:dataOutputAssociation id="DataOutputAssociation_0dwp61n">
-        <bpmn:targetRef>job_information_database</bpmn:targetRef>
-      </bpmn:dataOutputAssociation>
     </bpmn:userTask>
     <bpmn:sendTask id="provde_job_information" name="Provide job information" camunda:class="org.camunda.wf.hiring.sendMessages.ProvideJobInformation">
       <bpmn:incoming>SequenceFlow_1ar7lxu</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1epk7qw</bpmn:outgoing>
-      <bpmn:property id="Property_1pqt9l0" name="__targetRef_placeholder" />
-      <bpmn:dataInputAssociation id="DataInputAssociation_0mraqrf">
-        <bpmn:sourceRef>job_information_database</bpmn:sourceRef>
-        <bpmn:targetRef>Property_1pqt9l0</bpmn:targetRef>
-      </bpmn:dataInputAssociation>
     </bpmn:sendTask>
-    <bpmn:dataStoreReference id="job_information_database" name="Job information&#10;database" />
     <bpmn:sequenceFlow id="SequenceFlow_1epk7qw" sourceRef="provde_job_information" targetRef="ExclusiveGateway_0mux9gs" />
     <bpmn:eventBasedGateway id="ExclusiveGateway_0mux9gs">
       <bpmn:incoming>SequenceFlow_1epk7qw</bpmn:incoming>
@@ -371,20 +362,6 @@
       <bpmndi:BPMNShape id="SendTask_19y7bvq_di" bpmnElement="provde_job_information">
         <dc:Bounds x="660" y="215" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="DataStoreReference_158lgb6_di" bpmnElement="job_information_database">
-        <dc:Bounds x="594.722" y="130.435" width="50" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="505" y="143" width="74" height="24" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="DataOutputAssociation_0dwp61n_di" bpmnElement="DataOutputAssociation_0dwp61n">
-        <di:waypoint xsi:type="dc:Point" x="569" y="215" />
-        <di:waypoint xsi:type="dc:Point" x="597" y="180" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="DataInputAssociation_0mraqrf_di" bpmnElement="DataInputAssociation_0mraqrf">
-        <di:waypoint xsi:type="dc:Point" x="641" y="180" />
-        <di:waypoint xsi:type="dc:Point" x="670" y="215" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="MessageFlow_02uqzwr_di" bpmnElement="MessageFlow_02uqzwr">
         <di:waypoint xsi:type="dc:Point" x="710" y="215" />
         <di:waypoint xsi:type="dc:Point" x="710" y="-202" />
