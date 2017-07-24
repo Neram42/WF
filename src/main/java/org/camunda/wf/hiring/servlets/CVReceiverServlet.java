@@ -19,15 +19,15 @@ import org.camunda.wf.hiring.entities.CvCollection;
 
 import com.google.gson.Gson;
 /*
- * This servlet serves for CV receiving
+ * This class is a servlet that serves for CV receiving
  */
 @WebServlet(name = "CVReceiver", description = "Servlet for receiving the CVs", urlPatterns = "/CVReceiver")
 public class CVReceiverServlet extends HttpServlet {
-	/**
-	* 
-	*/
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * this methods waits for CV from a http post request
+	 */
 	@SuppressWarnings("deprecation")
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -35,20 +35,20 @@ public class CVReceiverServlet extends HttpServlet {
 		String contentType = request.getContentType();
 		
 		PrintWriter out = response.getWriter();
-		response.setContentType("application/json"); // content type of our
-														// response, html for
+		// set content type of our response for testing
+		response.setContentType("application/json"); 
 		
-													// testing
-		if (!"application/json".equals(contentType)) { // check if we really get
-														// a JSON
+		// check if the received request contains a JSON
+		if (!"application/json".equals(contentType)) { 
 			response.getWriter().append("{\"error\":\"invalidRequest\",\"status\":\"wrong content type\"}");
 		}
 
-		// Instantiate the GSONs out of the received JSON
-		BufferedReader reader = request.getReader(); // contains JSON data, RAW
+		// Load data in raw form of the received JSON
+		BufferedReader reader = request.getReader();
 		response.setContentType("text/html");
 		out.println("<html><body>");
 		
+		// Initiate a CvCollection object
 		CvCollection cvCollection;
 		try {
 			cvCollection = new Gson().fromJson(reader, CvCollection.class);
@@ -57,28 +57,27 @@ public class CVReceiverServlet extends HttpServlet {
 			return; // break
 		}
 
+		// serializes the cvs contained in the cvCollection
 		ObjectValue cvs = Variables.objectValue(cvCollection.getCvCollection()).serializationDataFormat("application/json").create();
-//		ArrayList<CV> cvs = cvCollection.getCvCollection();
 		
+		// check if cvs are empty
 		if (null == cvs) {
 			response.getWriter().append("{\"error\":\"invalidRequest\", \"status\":\"CV Object not created\"}");
 			return; // break
 		} else {
+			
+			// set cvs as a variable in camunda cockpit
 			ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
 			RuntimeService runtimeService = processEngine.getRuntimeService();
-			
-//			ArrayList<CV> cvs = cvCollection.getCvCollection();
-//			
-			
-
 			runtimeService.setVariable(cvCollection.getProcessInstanceId(), "cvs", cvs);
-			// build HTML output
 			
+			// check if received Id is null
 			String id = cvCollection.getProcessInstanceId();
 			if (null == id) {
 				out.println("<h2>Error</h2><p>Parameter id missing!</p>" + id);
 			} else {
 				try {
+					// continue process
 					runtimeService.createMessageCorrelation("CVReceiver").processInstanceId(id).correlate();
 					out.println("<h1>CVs delivered to process</h1><p>ID: " + id + "</p>");
 				} catch (MismatchingMessageCorrelationException e) {
@@ -93,13 +92,3 @@ public class CVReceiverServlet extends HttpServlet {
 	}
 }
 
-/*
- * Sample JSON Object:
- * 
- * { "processInstanceId" : "359acb27-6e2d-11e7-a15a-06b9ccde9c04", "cvCollectionen": ["cv1": {"Chuck Norris",
- * "address": "Street 2", "tel": "222333", "study": "IS", "degree": "MSC",
- * "grade": "3", "sectors": "IT and Design", "motivation": "Very motivated",
- * "skills": "Lots of skills", "experience": "Amazing experience", "isAccepted":
- * true, "rating": "exceptional" }]
- * 
- */

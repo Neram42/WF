@@ -2,6 +2,10 @@ package org.camunda.wf.hiring.entities;
 
 import java.util.ArrayList;
 
+/**
+ * This class provides an CvCollection Object
+ *
+ */
 public class CvCollection {
 	private ArrayList<CV> cvCollection;
 	private String processInstanceId;
