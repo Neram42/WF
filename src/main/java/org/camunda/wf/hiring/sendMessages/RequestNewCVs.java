@@ -13,10 +13,11 @@ import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 
 import org.camunda.wf.hiring.entities.Request;
-import org.camunda.wf.hiring.services.Constants;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import Utils.Constants;
 
 
 /*

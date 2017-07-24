@@ -6,7 +6,8 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
-import org.camunda.wf.hiring.services.Constants;
+
+import Utils.Constants;
 
 /**
  * This class provides and sends Job Information to weplacm
