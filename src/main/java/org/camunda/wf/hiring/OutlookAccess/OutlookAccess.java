@@ -84,8 +84,6 @@ public class OutlookAccess {
 
 	}
 	
-	
-	//TODO:
 	/*
 	 * This method should delete an appointment
 	 */
