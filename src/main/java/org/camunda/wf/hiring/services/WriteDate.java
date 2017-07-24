@@ -5,11 +5,18 @@ import java.util.GregorianCalendar;
 
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
+import org.camunda.bpm.engine.variable.Variables;
+import org.camunda.bpm.engine.variable.value.ObjectValue;
 import org.camunda.wf.hiring.OutlookAccess.OutlookAccess;
+import org.camunda.wf.hiring.entities.OutlookAppointment;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import microsoft.exchange.webservices.data.core.ExchangeService;
 import microsoft.exchange.webservices.data.core.service.item.Appointment;
+import microsoft.exchange.webservices.data.property.complex.ItemId;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class WriteDate implements JavaDelegate {
 
 	public static String subject;
@@ -36,9 +43,20 @@ public class WriteDate implements JavaDelegate {
 				"Vice_president@outlook.de");	
 		
 		//Save Appointment in the Outlook Appointment class to save it in camunda
-//		OutlookAppointment oapp = new OutlookAppointment(app);
-//		
-//		execution.setVariable("appointment", oapp);
+		OutlookAppointment oapp = new OutlookAppointment(app);
+		
+//		execution.setVariable("appointmentId", oapp);
+		
+		
+		ItemId iid = oapp.getItemId();
+		ObjectValue appValue = Variables.objectValue(iid).serializationDataFormat(Variables.SerializationDataFormats.JSON).create();
+
+		execution.setVariable("appointmentId", appValue);
+//		System.out.println("Halloo");
+//		System.out.println(appValue.isDeserialized());
+		
+		
+
 	}
 
 }

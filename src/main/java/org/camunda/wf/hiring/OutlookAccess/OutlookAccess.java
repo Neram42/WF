@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.Calendar;
 
 import microsoft.exchange.webservices.data.core.ExchangeService;
+import microsoft.exchange.webservices.data.core.PropertySet;
 import microsoft.exchange.webservices.data.core.enumeration.misc.ExchangeVersion;
 import microsoft.exchange.webservices.data.core.enumeration.service.DeleteMode;
 import microsoft.exchange.webservices.data.core.exception.service.local.ServiceLocalException;
@@ -11,6 +12,7 @@ import microsoft.exchange.webservices.data.core.service.item.Appointment;
 import microsoft.exchange.webservices.data.core.service.item.EmailMessage;
 import microsoft.exchange.webservices.data.credential.ExchangeCredentials;
 import microsoft.exchange.webservices.data.credential.WebCredentials;
+import microsoft.exchange.webservices.data.property.complex.ItemId;
 import microsoft.exchange.webservices.data.property.complex.MessageBody;
 
 public class OutlookAccess {
@@ -85,12 +87,16 @@ public class OutlookAccess {
 	}
 	
 	
-	//TODO:
+
 	/*
-	 * This method should delete an appointment
+	 * This method should deletes an appointment
 	 */
-	public static void deleteAppointment(Appointment app) throws ServiceLocalException, Exception{
-		 app.delete(DeleteMode.HardDelete);
+	public static void deleteAppointment(ExchangeService service, ItemId id) throws ServiceLocalException, Exception{
+		
+		Appointment appointment = Appointment.bind(service, id);
+		appointment.delete(DeleteMode.MoveToDeletedItems);
+		
+//		 appointment.delete(DeleteMode.HardDelete);
 	}
 	
 }
